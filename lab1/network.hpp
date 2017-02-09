@@ -23,7 +23,7 @@ private:
     bool compromised;
     int target;
     int location;
-    void generateTarget(); //get random int for targer
+    void generateTarget(); //get random int for targert
 };
 
 

@@ -17,7 +17,7 @@ class Event
 public:
     Event(bool fix, int time, int target);
 private:
-    bool isFix;
+    bool isFix; //fix or attack
     int time;
     int target;
 };
