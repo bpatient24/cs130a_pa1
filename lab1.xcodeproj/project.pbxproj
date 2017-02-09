@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		3A5F265F1E4C5F7400F1F017 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A5F265E1E4C5F7400F1F017 /* main.cpp */; };
 		3A5F26671E4C5F8B00F1F017 /* ids.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A5F26651E4C5F8B00F1F017 /* ids.cpp */; };
+		3A5F266A1E4C616000F1F017 /* sysAdmin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A5F26681E4C616000F1F017 /* sysAdmin.cpp */; };
+		3A5F266D1E4C616B00F1F017 /* network.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A5F266B1E4C616B00F1F017 /* network.cpp */; };
+		3A5F26701E4C617200F1F017 /* attacker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A5F266E1E4C617200F1F017 /* attacker.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,6 +31,12 @@
 		3A5F265E1E4C5F7400F1F017 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		3A5F26651E4C5F8B00F1F017 /* ids.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ids.cpp; sourceTree = "<group>"; };
 		3A5F26661E4C5F8B00F1F017 /* ids.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ids.hpp; sourceTree = "<group>"; };
+		3A5F26681E4C616000F1F017 /* sysAdmin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sysAdmin.cpp; sourceTree = "<group>"; };
+		3A5F26691E4C616000F1F017 /* sysAdmin.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = sysAdmin.hpp; sourceTree = "<group>"; };
+		3A5F266B1E4C616B00F1F017 /* network.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = network.cpp; sourceTree = "<group>"; };
+		3A5F266C1E4C616B00F1F017 /* network.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = network.hpp; sourceTree = "<group>"; };
+		3A5F266E1E4C617200F1F017 /* attacker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = attacker.cpp; sourceTree = "<group>"; };
+		3A5F266F1E4C617200F1F017 /* attacker.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = attacker.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +70,12 @@
 			isa = PBXGroup;
 			children = (
 				3A5F265E1E4C5F7400F1F017 /* main.cpp */,
+				3A5F26681E4C616000F1F017 /* sysAdmin.cpp */,
+				3A5F26691E4C616000F1F017 /* sysAdmin.hpp */,
+				3A5F266B1E4C616B00F1F017 /* network.cpp */,
+				3A5F266C1E4C616B00F1F017 /* network.hpp */,
+				3A5F266E1E4C617200F1F017 /* attacker.cpp */,
+				3A5F266F1E4C617200F1F017 /* attacker.hpp */,
 				3A5F26651E4C5F8B00F1F017 /* ids.cpp */,
 				3A5F26661E4C5F8B00F1F017 /* ids.hpp */,
 			);
@@ -124,7 +139,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A5F26671E4C5F8B00F1F017 /* ids.cpp in Sources */,
+				3A5F266A1E4C616000F1F017 /* sysAdmin.cpp in Sources */,
+				3A5F266D1E4C616B00F1F017 /* network.cpp in Sources */,
 				3A5F265F1E4C5F7400F1F017 /* main.cpp in Sources */,
+				3A5F26701E4C617200F1F017 /* attacker.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
