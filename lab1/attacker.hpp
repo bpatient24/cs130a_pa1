@@ -11,4 +11,6 @@
 
 #include <stdio.h>
 
+void attack(int time, int source, int target);  //Schedule an attack event for time from source to target.
+
 #endif /* attacker_hpp */

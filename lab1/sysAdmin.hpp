@@ -15,20 +15,28 @@
 class Event
 {
 public:
-    
+    Event(bool fix, int time, int target);
 private:
-    
-    
+    bool isFix;
+    int time;
+    int target;
 };
 
-
-
-class EventQueue
+class EventQueue: public Event
 {
 public:
-    
+    bool isEmpty();
 private:
     int *data;
+    int heapSize;
+    int arraySize;
+    void insertFixEvent(Event x);
+    int getLeftChildIndex(int node);
+    int getRightChildIndex(int node);
+    int getParentIndex(int node);
+    void percolateUp();
+    void percolateDown();
+    
 };
 
 class SysAdmin: public EventQueue
@@ -37,6 +45,6 @@ public:
     
 private:
     void fix(int time, int target);  //Schedule a computer to be fixed. It can be compromised again.
-    void attack(int time, int source, int target);  //Schedule an attack event for time from source to target.
+    
 };
 #endif /* sysAdmin_hpp */
