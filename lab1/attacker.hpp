@@ -10,7 +10,14 @@
 #define attacker_hpp
 
 #include <stdio.h>
-
-void attack(int time, int source, int target);  //Schedule an attack event for time from source to target.
+class Attacker
+{
+public:
+    Attacker();
+    Attacker(int rate);
+    void attack(int time, int source, int target); // generates event to notify sysAdmin
+private:
+    int detectRate;
+};
 
 #endif /* attacker_hpp */

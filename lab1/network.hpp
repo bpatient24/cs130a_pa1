@@ -20,31 +20,35 @@ public:
     //member functions
     void compromise();      //sets compromised to true.
     void fix();             //sets compromise to false.
+private:
     Computer();
     Computer(int location);
     int target;
     bool compromised;
     int location;
-private:
-    /*Computer();
-    Computer(int location);
-    int target;
-    bool compromised;
-    int location;*/
 };
 
+class SysAdmin
+{
+public:
+    void alert();
+private:
+    void fix(int time, int target);  //Schedule a computer to be fixed. It can be compromised again.
+    
+};
 
 class IDS
 {
 public:
+    IDS();
     IDS(int rate);
-    void computerAttacked(int attacker, int victim); // generates event to notify sysAdmin
+    void notify(int attacker, int victim); // generates event to notify sysAdmin
 private:
     int detectRate;
 };
 
 
-class Network: public Computer
+class Network: public Computer, public IDS, public SysAdmin
 {
     friend Computer;
 public:
@@ -53,13 +57,10 @@ public:
     bool compromised;
     vector<Computer> network;
     vector<int> infectedComputers; // array of indexes for infected computers
+private:
     int networkSize;
     int percentCompromised;
-    void generateTarget(Computer x);
-private:
-    /*int networkSize;
-    int percentCompromised;
-    void generateTarget(Computer x);*/ //get random int for target
+    void generateTarget(Computer x); //get random int for target
     
 };
 

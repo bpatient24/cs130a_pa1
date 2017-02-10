@@ -38,13 +38,18 @@ void Computer::fix()         //sets compromise to false.
 };
 
 //IDS DECLARATIONS *************************************************************************************
+//default constructor
+IDS::IDS()
+{
+    detectRate = 50;
+}
 // IDS constructor
 IDS::IDS(int rate)
 {
     detectRate = rate;
 };
 
-void IDS::computerAttacked(int attacker, int victim)
+void IDS::notify(int attacker, int victim)
 {
     int attackerIndex = attacker;
     int victimIndex = victim;
