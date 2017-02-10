@@ -42,7 +42,7 @@ private:
 class SysAdmin: public EventQueue
 {
 public:
-    
+    void alert();
 private:
     void fix(int time, int target);  //Schedule a computer to be fixed. It can be compromised again.
     

@@ -10,42 +10,49 @@
 #define network_hpp
 
 #include <stdio.h>
+#include <vector>
+using namespace std;
 
 class Computer
 {
+    friend class Network;
 public:
     //member functions
-    Computer(int location); //constructor
-    void compromise(Computer x);  //sets compromised to true.
-    void fix(Computer x);            //sets compromise to false.
+    void compromise();      //sets compromised to true.
+    void fix();             //sets compromise to false.
     
 private:
-    bool compromised;
+    Computer();
+    Computer(int location);
     int target;
+    bool compromised;
     int location;
-    void generateTarget(); //get random int for targert
 };
 
 
 class IDS
 {
 public:
+    IDS(int rate);
     void computerAttacked(int attacker, int victim); // generates event to notify sysAdmin
-    
-    void notify(int time, int target);  // The sysadmin will be notified by the IDS that an attack was detected. This gives the sysadmin both the source and the target via the attack object. The sysadmin will schedule fixes for both. The sysadmin can schedule fixes 10 seconds apart, and it takes 10 seconds from notification to first fix.
-
 private:
-    int detectionRate;
+    int detectRate;
 };
 
 
 class Network: public Computer, public IDS
 {
+    friend Computer;
 public:
-    Network(int size);  //initializes network of computers with the halfway point seperating left/right
+    Network();
+    Network(int size); //initializes network of computers with the halfway point seperating left/right
+    bool compromised;
+    vector<class Computer> network;
+    vector<int> infectedComputers; // array of indexes for infected computers
 private:
     int networkSize;
     int percentCompromised;
+    void generateTarget(Computer x); //get random int for target
     
 };
 

@@ -8,7 +8,7 @@
 
 #include "sysAdmin.hpp"
 
-class BinaryMinHeap {
+/*class BinaryMinHeap {
 private:
     int *data;
     int heapSize;
@@ -40,7 +40,7 @@ public:
             return data[0];
     }
     
-    boolean isEmpty() {
+    bool isEmpty() {
         return (heapSize == 0);
     }
     
@@ -74,4 +74,4 @@ void insert(int data){
             itemCount++;
         }
     }
-}
+}*/
