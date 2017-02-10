@@ -30,11 +30,12 @@ private:
 
 class SysAdmin
 {
+    friend class IDS;
 public:
     void alert();
 private:
+    vector<int> infectedComputers; // array of indexes for infected computers
     void fix(int time, int target);  //Schedule a computer to be fixed. It can be compromised again.
-    
 };
 
 class IDS
@@ -50,13 +51,12 @@ private:
 
 class Network: public Computer, public IDS, public SysAdmin
 {
-    friend Computer;
+    friend class Computer;
 public:
     Network();
     Network(int size); //initializes network of computers with the halfway point seperating left/right
     bool compromised;
     vector<Computer> network;
-    vector<int> infectedComputers; // array of indexes for infected computers
 private:
     int networkSize;
     int percentCompromised;

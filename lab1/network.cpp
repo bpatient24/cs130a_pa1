@@ -7,7 +7,6 @@
 //
 
 #include "network.hpp"
-#include "sysAdmin.hpp"
 #include <stdlib.h>
 
 //COMPUTER DECLARATIONS *************************************************************************************
@@ -36,6 +35,8 @@ void Computer::fix()         //sets compromise to false.
 {
     compromised = false;
 };
+//SYSADMIN DECLARATIONS *************************************************************************************
+
 
 //IDS DECLARATIONS *************************************************************************************
 //default constructor
