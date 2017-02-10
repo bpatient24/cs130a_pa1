@@ -20,13 +20,17 @@ public:
     //member functions
     void compromise();      //sets compromised to true.
     void fix();             //sets compromise to false.
-    
-private:
     Computer();
     Computer(int location);
     int target;
     bool compromised;
     int location;
+private:
+    /*Computer();
+    Computer(int location);
+    int target;
+    bool compromised;
+    int location;*/
 };
 
 
@@ -40,19 +44,22 @@ private:
 };
 
 
-class Network: public Computer, public IDS
+class Network: public Computer
 {
     friend Computer;
 public:
     Network();
     Network(int size); //initializes network of computers with the halfway point seperating left/right
     bool compromised;
-    vector<class Computer> network;
+    vector<Computer> network;
     vector<int> infectedComputers; // array of indexes for infected computers
-private:
     int networkSize;
     int percentCompromised;
-    void generateTarget(Computer x); //get random int for target
+    void generateTarget(Computer x);
+private:
+    /*int networkSize;
+    int percentCompromised;
+    void generateTarget(Computer x);*/ //get random int for target
     
 };
 
