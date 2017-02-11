@@ -163,11 +163,11 @@ public:
         {
             if(event[0].isFix)
             {
-                //dipatch fix event
+                //dipatch fix event TODO
             }
             else
             {
-                // dispatch attack event
+                // dispatch attack event TODO
             }
             //remove event from queue
             event[0] = event[heapSize - 1];
@@ -194,10 +194,10 @@ public:
         }
     }
     
-    /*void growArray(int size)
+    void growArray(int size)
     {
         
-    }*/
+    }
     
     /*void shrinkArray(int size)
     {

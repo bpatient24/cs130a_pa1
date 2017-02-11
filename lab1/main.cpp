@@ -11,17 +11,22 @@
 #include "eventQueue.h"
 #include "network.hpp"
 #include "attacker.hpp"
+#include "outputs.h"
+
 
 using namespace std;
 
+// -1 = attacker ; -2  = sysadmin
 int simulateAttack(int numComputers, int attackPercent, int detectPercent)
 {
     int exitCode;
     double time = 0; //time in ms
     double maxTime = 8640000000;
+    bool firstLoop = true;
     Network networkUnderAttack = Network(numComputers);
-    while( (networkUnderAttack.compromised() != true) || (time < maxTime) ) // add exit for 100% fixed network
+    while( (networkUnderAttack.compromised() != true) || (time < maxTime) || (firstLoop ) || !(networkUnderAttack.compromised())) // add exit for 100% fixed network
     {
+        //do stuff
         
     }
     return exitCode;
