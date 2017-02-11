@@ -40,11 +40,11 @@ public:
     SysAdmin();
     void fix(class Network network, int target);
     void processNotify(class Network network, int attacker, int victim);//process the notify event
-    vector<int> infectedComputers;
+    //vector<int> infectedComputers;
     void percentInfected(Network net);
     void scheduleFix(class EventQueue x,unsigned long long int time, int target);  //Schedule a computer to be fixed. It can be compromised again.
-    void addInfected(int networkIndex);
-    void removeInfected(int networkIndex);
+    //void addInfected(int networkIndex);
+    //void removeInfected(int networkIndex);
 //private:
 
 };

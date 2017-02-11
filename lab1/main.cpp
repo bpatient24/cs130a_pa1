@@ -12,7 +12,7 @@
 #include "network.hpp"
 #include "attacker.hpp"
 #include "outputs.h"
-
+//#include "network.h"
 
 using namespace std;
 
@@ -38,11 +38,14 @@ int simulateAttack(int numComputers, int attackPercent, int detectPercent)
             //do stuff every second
             int attackerTarget = rand() % networkUnderAttack.networkSize + 1;
             attacker.scheduleAttack(*priorityQueue, globaltime + 100, -1, attackerTarget);// attackers attack
-            for(int i = 0; i < sysadmin.infectedComputers.size(); i++)
+            for(int i = 0; i < networkUnderAttack.networkSize; i++)
             {
-                networkUnderAttack.generateTarget(networkUnderAttack.network[sysadmin.infectedComputers.at(i)]);
-                networkUnderAttack.generateTarget(networkUnderAttack.network[i]);
-                attacker.scheduleAttack (*priorityQueue, globaltime + 100, sysadmin.infectedComputers.at(i), networkUnderAttack.network[i].target);
+                if(networkUnderAttack.network[i].compromised == true)
+                {
+                    networkUnderAttack.generateTarget(networkUnderAttack.network[i]);
+                    attacker.scheduleAttack (*priorityQueue, globaltime + 100, i, networkUnderAttack.network[i].target);
+                }
+                //networkUnderAttack.generateTarget(networkUnderAttack.network[sysadmin.infectedComputers.at(i)]);
             }
         }
         else if(globaltime % 1000 == 100)
@@ -72,12 +75,14 @@ int simulateAttack(int numComputers, int attackPercent, int detectPercent)
         {
             
             //schedule fixes
-            try{
-                sysadmin.scheduleFix(*priorityQueue, globaltime + 100, sysadmin.infectedComputers.at(0));
-            }
-            catch (out_of_range){
-                sysadmin.infectedComputers.resize(10);
-                cout << "SOMETHING" << endl;
+            for(int i = 0; i < networkUnderAttack.networkSize; i++)
+            {
+                if(networkUnderAttack.network[i].compromised == true)
+                {
+                    sysadmin.scheduleFix(*priorityQueue, globaltime + 100, i);
+                    break;
+                }
+                //networkUnderAttack.generateTarget(networkUnderAttack.network[sysadmin.infectedComputers.at(i)]);
             }
             /*if((sysadmin.infectedComputers.empty()))
             {

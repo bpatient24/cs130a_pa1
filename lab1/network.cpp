@@ -42,6 +42,7 @@ void Computer::fix()         //sets compromise to false.
 SysAdmin::SysAdmin()
 {
     //infectedComputers.push_back(1);
+    infectedComputers.reserve(100);
     cout << "SysAdmin Initialized" << endl;
 }
 
