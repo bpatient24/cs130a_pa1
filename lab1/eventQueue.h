@@ -21,6 +21,12 @@ class Event
     friend class EventQueue;
 public:
     //default constructor
+    unsigned long long int time;
+    int target;
+    bool isFix; //fix or attack
+    int source; // -1 = attacker ; -2  = sysadmin
+    int eventIndex;
+    
     Event()
     {
         isFix = NULL;
@@ -38,12 +44,7 @@ public:
         target = targetForEvent;
     }
 
-private:
-    bool isFix; //fix or attack
-    unsigned long long int time;
-    int source; // -1 = attacker ; -2  = sysadmin
-    int target;
-    int eventIndex;
+//private:
 };
 
 
@@ -161,14 +162,6 @@ public:
             throw string("QUEUE IS EMPTY");
         else
         {
-            if(event[0].isFix)
-            {
-                //dipatch fix event TODO
-            }
-            else
-            {
-                // dispatch attack event TODO
-            }
             //remove event from queue
             event[0] = event[heapSize - 1];
             heapSize--;

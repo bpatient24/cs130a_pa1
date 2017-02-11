@@ -25,12 +25,12 @@ void attackMessage(unsigned long long int time, int attacker, int victim)
     }
 }
 
-void fixMessage(int time, int target)
+void fixMessage(unsigned long long int time, int target)
 {
         cout << "FIX(" << time << "," << target << ")" << endl;
 }
 
-void notifyMessage(int time, int attacker, int victim)
+void notifyMessage(unsigned long long int time, int attacker, int victim)
 {
     if(attacker == - 1)
     {
@@ -42,19 +42,19 @@ void notifyMessage(int time, int attacker, int victim)
     }
 }
 
-void endMessage(int code, int time) // 1 = network wins; 2 = attacker wins; 3 = draw
+void endMessage(int code) // 1 = network wins; 2 = attacker wins; 3 = draw
 {
     if(code == 1)
     {
-        cout << "sysAdmin won in " << time << "milliseconds" << endl;
+        cout << "sysadmin won!" << endl;
     }
     else if(code == 2)
     {
-        cout << "attacker won in" << time << "milliseconds" << endl;
+        cout << "attacker won!" << endl;
     }
     else
     {
-        cout << "DRAW" << endl;
+        cout << "DRAW - time ran out" << endl;
     }
 }
 #endif /* outputs_h */

@@ -24,8 +24,8 @@ public:
     void fix();             //sets compromise to false.
     Computer();
     Computer(int location);
-private:
     int target;
+private:
     bool compromised;
     int location;
 };
@@ -37,7 +37,7 @@ class SysAdmin
     friend class Network;
 public:
     SysAdmin();
-    void fix(class Network network, unsigned long long int time, int target);
+    void fix(class Network network, int target);
     void processNotify(class Network network, int attacker, int victim);//process the notify event
     vector<int> infectedComputers;
     void scheduleFix(unsigned long long int time, int target);  //Schedule a computer to be fixed. It can be compromised again.

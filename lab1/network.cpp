@@ -44,9 +44,9 @@ SysAdmin::SysAdmin()
     cout << "SysAdmind Initialized" << endl;
 }
 
-void SysAdmin::fix(class Network network, unsigned long long int timeForFix, int fixTarget)
+void SysAdmin::fix(class Network network, int fixTarget)
 {
-    //TODO add fix event and remove from infected list
+    //add fix event and remove from infected list
     network.fixComputer(fixTarget);
     removeInfected(fixTarget);
 }
