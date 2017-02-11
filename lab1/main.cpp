@@ -29,7 +29,7 @@ int simulateAttack(int numComputers, int attackPercent, int detectPercent)
     IDS ids = IDS(detectPercent);
     Attacker attacker = Attacker(attackPercent);
     EventQueue *priorityQueue = new EventQueue();
-    while(!exitConditionNotMet)
+    while(exitConditionNotMet)
     {
         //do stuff
         if(globaltime % 1000 == 0 && globaltime % 10000 !=0)
@@ -61,7 +61,7 @@ int simulateAttack(int numComputers, int attackPercent, int detectPercent)
                     // dispatch attack event
                     attacker.attack(networkUnderAttack, priorityQueue[0].source, priorityQueue[0].target);
                     attackMessage(priorityQueue[0].time, priorityQueue[0].source, priorityQueue[0].target);
-                    ids.notify(networkUnderAttack, priorityQueue[0].source, priorityQueue[0].target);
+                    ids.notify(networkUnderAttack, sysadmin, priorityQueue[0].source, priorityQueue[0].target);
                     priorityQueue->removeMin();
                 }
             }
@@ -98,10 +98,13 @@ int simulateAttack(int numComputers, int attackPercent, int detectPercent)
 }
 
 int main(int argc, const char * argv[]) {
-    int numComputers = atoi(argv[1]);
-    int attackPercent = atoi(argv[2]);
-    int detectPercent = atoi(argv[3]);
-    int result = simulateAttack(numComputers, attackPercent, detectPercent);
+    //int numComputers = atoi(argv[1]);
+    //int attackPercent = atoi(argv[2]);
+    //int detectPercent = atoi(argv[3]);
+    //int result = simulateAttack(numComputers, attackPercent, detectPercent);
+    int result = simulateAttack(100, 100, 1);
     endMessage(result);
     return 1;
 }
+
+

@@ -47,12 +47,12 @@ private:
 };
 
 //IDS DECLARATIONS *************************************************************************************/
-class IDS: public SysAdmin
+class IDS //: public SysAdmin
 {
 public:
     IDS();
     IDS(int rate);
-    void notify(class Network myNetwork, int attacker, int victim); // generates event to notify sysAdmin
+    void notify(class Network myNetwork, class SysAdmin sys, int attacker, int victim); // generates event to notify sysAdmin
 private:
     int detectRate;
     bool detectedAttack(class Network myNetwork);
@@ -60,7 +60,7 @@ private:
 
 
 //NETWORK DECLARATIONS *************************************************************************************
-class Network: public Computer, public SysAdmin , public IDS
+class Network: public Computer, public IDS
 {
     friend class Computer;
     friend class SysAdmin;

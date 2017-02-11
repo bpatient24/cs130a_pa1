@@ -41,7 +41,7 @@ void Computer::fix()         //sets compromise to false.
 //SYSADMIN DECLARATIONS *************************************************************************************
 SysAdmin::SysAdmin()
 {
-    cout << "SysAdmind Initialized" << endl;
+    cout << "SysAdmin Initialized" << endl;
 }
 
 void SysAdmin::fix(class Network network, int fixTarget)
@@ -54,7 +54,7 @@ void SysAdmin::fix(class Network network, int fixTarget)
 void SysAdmin::scheduleFix(class EventQueue x, unsigned long long int time, int target)
 {
     Event fix;
-    fix= Event(true, time, -2, target);
+    fix = Event(true, time, -2, target);
     x.addEvent(fix);
 }
 
@@ -98,13 +98,13 @@ bool IDS::detectedAttack(Network network)
     return (rand() % 100 + 1) >= (100 - network.detectRate);
 }
 
-void IDS::notify(Network network, int attacker, int victim)
+void IDS::notify(Network network, SysAdmin sys, int attacker, int victim)
 {
     if(attacker == -1)
     {
         if(detectedAttack(network))
         {
-            processNotify(network, attacker, victim);
+            sys.processNotify(network, attacker, victim);
         }
     }
     else
@@ -113,7 +113,7 @@ void IDS::notify(Network network, int attacker, int victim)
         {
             if(detectedAttack(network))
             {
-                processNotify(network, attacker, victim);
+                sys.processNotify(network, attacker, victim);
             }
         }
     }

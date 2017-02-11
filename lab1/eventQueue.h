@@ -175,9 +175,9 @@ public:
     {
         if (isFull())
         {
+            int oldSize = arraySize;
             doubleArray(arraySize);
-            //event[arraySize + 1] = action;
-            arraySize++;
+            event[oldSize + 1] = action;
             heapSize++;
         }
         else
