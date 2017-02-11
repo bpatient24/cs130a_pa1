@@ -20,14 +20,41 @@ using namespace std;
 int simulateAttack(int numComputers, int attackPercent, int detectPercent)
 {
     int exitCode;
-    double time = 0; //time in ms
-    double maxTime = 8640000000;
+    unsigned long long int time = 0; //time in ms
+    unsigned long long int maxTime = 8640000000;
     bool firstLoop = true;
     Network networkUnderAttack = Network(numComputers);
-    while( (networkUnderAttack.compromised() != true) || (time < maxTime) || (firstLoop ) || !(networkUnderAttack.compromised())) // add exit for 100% fixed network
+    SysAdmin sysadmin = SysAdmin();
+    IDS ids = IDS(detectPercent);
+    Attacker attacker = Attacker(attackPercent);
+    while((networkUnderAttack.compromised() != true) && (time < maxTime) && ((firstLoop) || !(networkUnderAttack.percentCompromised == 0)) )
     {
         //do stuff
-        
+        if(time % 1000 == 0 && time % 10000 !=0)
+        {
+            //do stuff every second
+            int attackerTarget = rand() % networkUnderAttack.networkSize + 1;
+            attacker.scheduleAttack(time + 100, -1, attackerTarget);// attackers attack
+            for(int i = 0; i < sysadmin.infectedComputers.size(); i++)
+            {
+                networkUnderAttack.generateTarget(networkUnderAttack.network[sysadmin.infectedComputers[i]]);
+                attacker.scheduleAttack (time + 100, sysadmin.infectedComputers[i], networkUnderAttack.generateTarget(networkUnderAttack.network[i]));
+            }
+            
+        }
+        else if(time % 1000 == 100)
+        {
+            // do stuff with latencies
+        }
+        else if(time % 10000 == 0)
+        {
+            //schedule fixes
+            if(sysadmin.infectedComputers[0])
+            {
+                sysadmin.scheduleFix(time, sysadmin.infectedComputers[0]);
+            }
+        }
+        time += 100;
     }
     return exitCode;
 }

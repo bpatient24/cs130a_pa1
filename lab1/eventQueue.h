@@ -30,7 +30,7 @@ public:
         eventIndex = NULL;
     }
     // constructor
-    Event(bool fix, int timeForEvent, int eventSource, int targetForEvent)
+    Event(bool fix, unsigned long long int timeForEvent, int eventSource, int targetForEvent)
     {
         isFix = fix;
         time = timeForEvent;
@@ -40,7 +40,7 @@ public:
 
 private:
     bool isFix; //fix or attack
-    int time;
+    unsigned long long int time;
     int source; // -1 = attacker ; -2  = sysadmin
     int target;
     int eventIndex;

@@ -17,15 +17,16 @@ Attacker::Attacker()
 }
 Attacker::Attacker(int rate)
 {
-    successRate = rate;}
+    successRate = rate;
+}
 
 bool Attacker::succesfulAttack()
 {
     return (rand() % 100 + 1) >= (100 - successRate);
 }
 
-void Attacker::attack(int time, int source, int target) // generates event to notify sysAdmin
-{                                                       // source == -1 for attacker
+void Attacker::scheduleAttack(unsigned long long int time, int source, int target) // generates event to notify sysAdmin
+{                                                                                  // source == -1 for attacker
     //add attack to event queue
     if(succesfulAttack())
     {
@@ -42,4 +43,9 @@ void Attacker::attack(int time, int source, int target) // generates event to no
             priorityQueue->addEvent(attack);
         }
     }
+}
+
+void Attacker::attack(class Network network, int source, int target)
+{
+    network.network[target].compromise();
 }

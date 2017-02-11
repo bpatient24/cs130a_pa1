@@ -44,14 +44,14 @@ SysAdmin::SysAdmin()
     cout << "SysAdmind Initialized" << endl;
 }
 
-void SysAdmin::fix(class Network network, int timeForFix, int fixTarget)
+void SysAdmin::fix(class Network network, unsigned long long int timeForFix, int fixTarget)
 {
     //TODO add fix event and remove from infected list
     network.fixComputer(fixTarget);
     removeInfected(fixTarget);
 }
 
-void SysAdmin::scheduleFix(int time, int target) 
+void SysAdmin::scheduleFix(unsigned long long int time, int target)
 {
     Event fix;
     fix= Event(true, time, -2, target);
@@ -138,8 +138,8 @@ Network::Network(int size)
         dividerIndex = size / 2 + 1;
     }
     else
-
-    {        dividerIndex = size / 2;
+    {
+         dividerIndex = size / 2;
     }
     networkSize = size;
     percentCompromised = 0;
@@ -158,10 +158,8 @@ void Network::fixComputer(int index)
 //target
 void Network::generateTarget(Computer x)
 {
-    x.target = rand() % networkSize + 3;
+    x.target = rand() % networkSize + 1;
 }
-
-
 
 
 

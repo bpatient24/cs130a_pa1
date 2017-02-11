@@ -12,7 +12,7 @@
 #include <string>
 #include <iostream>
 
-void attackMessage(int time, int attacker, int victim)
+void attackMessage(unsigned long long int time, int attacker, int victim)
 {
     if(attacker == - 1)
     {

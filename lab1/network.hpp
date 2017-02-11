@@ -37,11 +37,11 @@ class SysAdmin
     friend class Network;
 public:
     SysAdmin();
-    void fix(class Network network, int time, int target);
+    void fix(class Network network, unsigned long long int time, int target);
     void processNotify(class Network network, int attacker, int victim);//process the notify event
+    vector<int> infectedComputers;
+    void scheduleFix(unsigned long long int time, int target);  //Schedule a computer to be fixed. It can be compromised again.
 private:
-    void scheduleFix(int time, int target);  //Schedule a computer to be fixed. It can be compromised again.
-    vector<int> infectedComputers; // array of indexes for infected computers
     void addInfected(int networkIndex);
     void removeInfected(int networkIndex);
 };
@@ -71,12 +71,13 @@ public:
     bool compromised();  //checks if the network has be taken over
     vector<Computer> network;
     void fixComputer(int index);
-
-private:
-    int networkSize;
-    int dividerIndex; 
     int percentCompromised;
+    int getNetworkSize();
+    int networkSize;
+    int dividerIndex;
     void generateTarget(Computer x); //get random int for target
+//private:
+    
 };
 
 
