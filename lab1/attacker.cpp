@@ -25,7 +25,7 @@ bool Attacker::succesfulAttack()
     return (rand() % 100 + 1) >= (100 - successRate);
 }
 
-void Attacker::scheduleAttack(unsigned long long int time, int source, int target) // generates event to notify sysAdmin
+void Attacker::scheduleAttack(class EventQueue x, unsigned long long int time, int source, int target) // generates event to notify sysAdmin
 {                                                                                  // source == -1 for attacker
     //add attack to event queue
     if(succesfulAttack())
@@ -34,13 +34,13 @@ void Attacker::scheduleAttack(unsigned long long int time, int source, int targe
         {
             Event attack;
             attack = Event(false, time, -1, target);
-            priorityQueue->addEvent(attack);
+            x.addEvent(attack);
         }
         else if(source > -1)
         {
             Event attack;
             attack = Event(false, time, source, target);
-            priorityQueue->addEvent(attack);
+            x.addEvent(attack);
         }
     }
 }

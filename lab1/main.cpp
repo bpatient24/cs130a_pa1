@@ -28,19 +28,20 @@ int simulateAttack(int numComputers, int attackPercent, int detectPercent)
     SysAdmin sysadmin = SysAdmin();
     IDS ids = IDS(detectPercent);
     Attacker attacker = Attacker(attackPercent);
-    while(exitConditionNotMet)
+    EventQueue *priorityQueue = new EventQueue();
+    while(!exitConditionNotMet)
     {
         //do stuff
         if(globaltime % 1000 == 0 && globaltime % 10000 !=0)
         {
             //do stuff every second
             int attackerTarget = rand() % networkUnderAttack.networkSize + 1;
-            attacker.scheduleAttack(globaltime + 100, -1, attackerTarget);// attackers attack
+            attacker.scheduleAttack(*priorityQueue, globaltime + 100, -1, attackerTarget);// attackers attack
             for(int i = 0; i < sysadmin.infectedComputers.size(); i++)
             {
                 networkUnderAttack.generateTarget(networkUnderAttack.network[sysadmin.infectedComputers[i]]);
                 networkUnderAttack.generateTarget(networkUnderAttack.network[i]);
-                attacker.scheduleAttack (globaltime + 100, sysadmin.infectedComputers[i], networkUnderAttack.network[i].target);
+                attacker.scheduleAttack (*priorityQueue, globaltime + 100, sysadmin.infectedComputers[i], networkUnderAttack.network[i].target);
             }
         }
         else if(globaltime % 1000 == 100)
@@ -70,11 +71,12 @@ int simulateAttack(int numComputers, int attackPercent, int detectPercent)
             //schedule fixes
             if(sysadmin.infectedComputers[0])
             {
-                sysadmin.scheduleFix(globaltime + 100, sysadmin.infectedComputers[0]);
+                sysadmin.scheduleFix(*priorityQueue, globaltime + 100, sysadmin.infectedComputers[0]);
             }
         }
         
         exitConditionNotMet = (networkUnderAttack.compromised() != true) && (globaltime < maxTime) && ((firstLoop) || !(networkUnderAttack.percentCompromised == 0));
+        
         if(exitConditionNotMet)
         {
             if(networkUnderAttack.compromised() != true)
@@ -101,5 +103,5 @@ int main(int argc, const char * argv[]) {
     int detectPercent = atoi(argv[3]);
     int result = simulateAttack(numComputers, attackPercent, detectPercent);
     endMessage(result);
-    return 0;
+    return 1;
 }

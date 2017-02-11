@@ -29,11 +29,12 @@ public:
     
     Event()
     {
-        isFix = NULL;
-        time = NULL;
-        source = NULL;
-        target = NULL;
-        eventIndex = NULL;
+        Event(true, 1, -3, -3);
+        /*isFix = NULL;
+         time = NULL;
+         source = NULL;
+         target = NULL;
+         eventIndex = NULL;*/
     }
     // constructor
     Event(bool fix, unsigned long long int timeForEvent, int eventSource, int targetForEvent)
@@ -43,8 +44,8 @@ public:
         source = eventSource;
         target = targetForEvent;
     }
-
-//private:
+    
+    //private:
 };
 
 
@@ -72,7 +73,7 @@ private:
 public:
     EventQueue()
     {
-        EventQueue(1);
+        EventQueue(100);
     }
     
     EventQueue(int size)
@@ -174,8 +175,8 @@ public:
     {
         if (isFull())
         {
-            //growArray(arraySize * 2);
-            event[arraySize + 1] = action;
+            doubleArray(arraySize);
+            //event[arraySize + 1] = action;
             arraySize++;
             heapSize++;
         }
@@ -187,17 +188,18 @@ public:
         }
     }
     
-    void growArray(int size)
+    void doubleArray(int size)
     {
-        //GROW ARRAY TODO
+        //GROW ARRAY
+        Event *newArray = new Event[size*2];
+        for(int i = 0; i < size; i++)
+        {
+            newArray[i] = event[i];
+        }
+        arraySize = size * 2;
+        delete [] event;
+        event = newArray;
     }
-    
-    /*void shrinkArray(int size)
-    {
-        //half the array
-    }*/
 };
-
-EventQueue *priorityQueue;
 
 #endif /* eventQueue_h */

@@ -40,7 +40,7 @@ public:
     void fix(class Network network, int target);
     void processNotify(class Network network, int attacker, int victim);//process the notify event
     vector<int> infectedComputers;
-    void scheduleFix(unsigned long long int time, int target);  //Schedule a computer to be fixed. It can be compromised again.
+    void scheduleFix(class EventQueue x,unsigned long long int time, int target);  //Schedule a computer to be fixed. It can be compromised again.
 private:
     void addInfected(int networkIndex);
     void removeInfected(int networkIndex);

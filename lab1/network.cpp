@@ -51,11 +51,11 @@ void SysAdmin::fix(class Network network, int fixTarget)
     removeInfected(fixTarget);
 }
 
-void SysAdmin::scheduleFix(unsigned long long int time, int target)
+void SysAdmin::scheduleFix(class EventQueue x, unsigned long long int time, int target)
 {
     Event fix;
     fix= Event(true, time, -2, target);
-    priorityQueue->addEvent(fix);
+    x.addEvent(fix);
 }
 
 void SysAdmin::processNotify(Network network, int attacker, int victim)
