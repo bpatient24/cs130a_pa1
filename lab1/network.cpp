@@ -41,6 +41,7 @@ void Computer::fix()         //sets compromise to false.
 //SYSADMIN DECLARATIONS *************************************************************************************
 SysAdmin::SysAdmin()
 {
+    //infectedComputers.push_back(1);
     cout << "SysAdmin Initialized" << endl;
 }
 
@@ -72,6 +73,7 @@ void SysAdmin::processNotify(Network network, int attacker, int victim)
 
 void SysAdmin::addInfected(int index)
 {
+    //infectedComputers.get_allocator().allocate(1);
     infectedComputers.push_back(index);
 }
 
