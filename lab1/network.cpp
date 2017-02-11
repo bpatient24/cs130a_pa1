@@ -77,6 +77,11 @@ void SysAdmin::addInfected(int index)
     infectedComputers.push_back(index);
 }
 
+void SysAdmin::percentInfected(Network net)
+{
+   net.percentCompromised = (infectedComputers.size() / net.networkSize);
+}
+
 void SysAdmin::removeInfected(int index)
 {
     infectedComputers.erase(remove(infectedComputers.begin(), infectedComputers.end(), index), infectedComputers.end());

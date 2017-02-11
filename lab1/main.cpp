@@ -20,7 +20,7 @@ using namespace std;
 int simulateAttack(int numComputers, int attackPercent, int detectPercent)
 {
     int exitCode;
-    bool exitConditionNotMet;
+    bool exit;
     unsigned long long int globaltime = 0; //time in ms
     unsigned long long int maxTime = 8640000000;
     bool firstLoop = true;
@@ -29,7 +29,7 @@ int simulateAttack(int numComputers, int attackPercent, int detectPercent)
     IDS ids = IDS(detectPercent);
     Attacker attacker = Attacker(attackPercent);
     EventQueue *priorityQueue = new EventQueue();
-    while(exitConditionNotMet)
+    while(!exit)
     {
         //do stuff
         if(globaltime % 1000 == 0 && globaltime % 10000 !=0)
@@ -66,30 +66,30 @@ int simulateAttack(int numComputers, int attackPercent, int detectPercent)
                 }
             }
         }
-        else if(globaltime % 10000 == 0)
+        /*else if(globaltime % 10000 == 0)
         {
             //schedule fixes
             if(sysadmin.infectedComputers[0])
             {
                 sysadmin.scheduleFix(*priorityQueue, globaltime + 100, sysadmin.infectedComputers[0]);
             }
-        }
+        }*/
         
-        exitConditionNotMet = (networkUnderAttack.compromised() != true) && (globaltime < maxTime) && ((firstLoop) || !(networkUnderAttack.percentCompromised == 0));
+        exit = (networkUnderAttack.compromised() == true) && (globaltime < maxTime) && ((firstLoop) || !(networkUnderAttack.percentCompromised == 0));
         
-        if(exitConditionNotMet)
+        if(exit)
         {
             if(networkUnderAttack.compromised() != true)
             {
                 exitCode= 1;
             }
-            else if(globaltime < maxTime)
-            {
-                exitCode = 3;
-            }
             else if((firstLoop) || !(networkUnderAttack.percentCompromised == 0))
             {
                 exitCode = 2;
+            }
+            else if(globaltime < maxTime)
+            {
+                exitCode = 3;
             }
         }
         globaltime += 100;

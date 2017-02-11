@@ -20,21 +20,21 @@ class Event
 {
     friend class EventQueue;
 public:
-    //default constructor
+
     unsigned long long int time;
     int target;
     bool isFix; //fix or attack
     int source; // -1 = attacker ; -2  = sysadmin
     int eventIndex;
-    
+    //default constructor
     Event()
     {
-        Event(true, 1, -3, -3);
-        /*isFix = NULL;
-         time = NULL;
-         source = NULL;
-         target = NULL;
-         eventIndex = NULL;*/
+        //Event(true, 1, -3, -3);
+        isFix = NULL;
+        time = NULL;
+        source = NULL;
+        target = NULL;
+        eventIndex = NULL;
     }
     // constructor
     Event(bool fix, unsigned long long int timeForEvent, int eventSource, int targetForEvent)
@@ -83,7 +83,7 @@ public:
         arraySize = size;
     }
     
-    int getMinimum()
+    unsigned long long int getMinimum()
     {
         if (isEmpty())
             throw string("QUEUE IS EMPTY");
