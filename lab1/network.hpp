@@ -70,6 +70,7 @@ public:
     Network(int size);   //initializes network of computers with the halfway point seperating left/right
     bool compromised();  //checks if the network has be taken over
     vector<Computer> network;
+    void fixComputer(int index);
 
 private:
     int networkSize;

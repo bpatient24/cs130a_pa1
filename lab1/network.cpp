@@ -47,8 +47,8 @@ SysAdmin::SysAdmin()
 void SysAdmin::fix(class Network network, int timeForFix, int fixTarget)
 {
     //TODO add fix event and remove from infected list
-    network[fixTarget]->fix();
-    
+    network.fixComputer(fixTarget);
+    removeInfected(fixTarget);
 }
 
 void SysAdmin::scheduleFix(int time, int target) 
@@ -123,8 +123,7 @@ void IDS::notify(Network network, int attacker, int victim)
 //network defualt constructor
 Network::Network()
 {
-    network[0] = Computer(0);
-    dividerIndex = 1;
+    Network(0);
     cout << "Network default constructor" << endl;
 }
 //network constructor
@@ -139,15 +138,35 @@ Network::Network(int size)
         dividerIndex = size / 2 + 1;
     }
     else
-    {
-        dividerIndex = size / 2;
+
+    {        dividerIndex = size / 2;
     }
+    networkSize = size;
+    percentCompromised = 0;
     cout << "Network Properly Initialized" << endl;
+}
+
+bool Network::compromised()
+{
+    return percentCompromised > 50;
+}
+void Network::fixComputer(int index)
+{
+    network[index].fix();
 }
 
 //target
 void Network::generateTarget(Computer x)
 {
     x.target = rand() % networkSize + 3;
-    
 }
+
+
+
+
+
+
+
+
+
+

@@ -20,7 +20,7 @@ class Event
 {
     friend class EventQueue;
 public:
-    //defualt constructor
+    //default constructor
     Event()
     {
         isFix = NULL;
