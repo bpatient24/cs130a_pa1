@@ -17,8 +17,7 @@ Attacker::Attacker()
 }
 Attacker::Attacker(int rate)
 {
-    successRate = rate;
-}
+    successRate = rate;}
 
 bool Attacker::succesfulAttack()
 {
@@ -27,12 +26,20 @@ bool Attacker::succesfulAttack()
 
 void Attacker::attack(int time, int source, int target) // generates event to notify sysAdmin
 {                                                       // source == -1 for attacker
-    
+    //add attack to event queue
     if(succesfulAttack())
     {
-        //add attack to event queue
-        Event attack;
-        attack = Event(true, time, -2, target);
-        priorityQueue->addEvent(attack);
+        if(source == -1)
+        {
+            Event attack;
+            attack = Event(false, time, -1, target);
+            priorityQueue->addEvent(attack);
+        }
+        else if(source > -1)
+        {
+            Event attack;
+            attack = Event(false, time, source, target);
+            priorityQueue->addEvent(attack);
+        }
     }
 }

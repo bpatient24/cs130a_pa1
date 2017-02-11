@@ -60,7 +60,7 @@ void SysAdmin::scheduleFix(int time, int target)
 
 void SysAdmin::processNotify(Network network, int attacker, int victim)
 {
-    //TODO add infected to vector
+    //add infected to vector
     if(attacker > -1) //attacker is not attacker agent
     {
         //add attacker

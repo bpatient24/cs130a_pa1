@@ -38,7 +38,7 @@ class SysAdmin
 public:
     SysAdmin();
     void fix(class Network network, int time, int target);
-    void processNotify(class Network network, int attacker, int victim);// TODO process the notify event
+    void processNotify(class Network network, int attacker, int victim);//process the notify event
 private:
     void scheduleFix(int time, int target);  //Schedule a computer to be fixed. It can be compromised again.
     vector<int> infectedComputers; // array of indexes for infected computers
