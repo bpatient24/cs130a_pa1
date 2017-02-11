@@ -37,10 +37,47 @@ void Computer::fix()         //sets compromise to false.
 {
     compromised = false;
 };
+
 //SYSADMIN DECLARATIONS *************************************************************************************
 SysAdmin::SysAdmin()
 {
     cout << "SysAdmind Initialized" << endl;
+}
+
+void SysAdmin::fix(class Network network, int timeForFix, int fixTarget)
+{
+    //TODO add fix event and remove from infected list
+    network[fixTarget]->fix();
+    
+}
+
+void SysAdmin::scheduleFix(int time, int target) 
+{
+    Event fix;
+    fix= Event(true, time, -2, target);
+    priorityQueue->addEvent(fix);
+}
+
+void SysAdmin::processNotify(Network network, int attacker, int victim)
+{
+    //TODO add infected to vector
+    if(attacker > -1) //attacker is not attacker agent
+    {
+        //add attacker
+        addInfected(attacker);
+    }
+    //add victim
+    addInfected(victim);
+}
+
+void SysAdmin::addInfected(int index)
+{
+    infectedComputers.push_back(index);
+}
+
+void SysAdmin::removeInfected(int index)
+{
+    infectedComputers.erase(remove(infectedComputers.begin(), infectedComputers.end(), index), infectedComputers.end());
 }
 
 //IDS DECLARATIONS *************************************************************************************
@@ -56,14 +93,30 @@ IDS::IDS(int rate)
     cout << "IDS Initialized" << endl;
 };
 
-bool IDS::detectedAttack(int rate)
+bool IDS::detectedAttack(Network network)
 {
-    return (rand() % 100 + 1) >= (100 - detectRate);
+    return (rand() % 100 + 1) >= (100 - network.detectRate);
 }
 
-void IDS::notify(int attacker, int victim)
+void IDS::notify(Network network, int attacker, int victim)
 {
-    
+    if(attacker == -1)
+    {
+        if(detectedAttack(network))
+        {
+            processNotify(network, attacker, victim);
+        }
+    }
+    else
+    {
+        if(!((network.dividerIndex > attacker && network.dividerIndex > victim) || (network.dividerIndex < attacker && network.dividerIndex < victim))) // check to see if they crossed domains
+        {
+            if(detectedAttack(network))
+            {
+                processNotify(network, attacker, victim);
+            }
+        }
+    }
 }
 
 //NETWORK DECLARATIONS *************************************************************************************
@@ -71,6 +124,7 @@ void IDS::notify(int attacker, int victim)
 Network::Network()
 {
     network[0] = Computer(0);
+    dividerIndex = 1;
     cout << "Network default constructor" << endl;
 }
 //network constructor
@@ -79,6 +133,14 @@ Network::Network(int size)
     for(int i = 0; i < size; i++)
     {
         network.push_back(Computer(i));
+    }
+    if(size % 2 == 1)
+    {
+        dividerIndex = size / 2 + 1;
+    }
+    else
+    {
+        dividerIndex = size / 2;
     }
     cout << "Network Properly Initialized" << endl;
 }

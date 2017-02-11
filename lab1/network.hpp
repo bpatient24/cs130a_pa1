@@ -37,39 +37,45 @@ class SysAdmin
     friend class Network;
 public:
     SysAdmin();
-    void fix(int time, int target);
-    void processAlert();// TODO process the notify event
+    void fix(class Network network, int time, int target);
+    void processNotify(class Network network, int attacker, int victim);// TODO process the notify event
 private:
-    vector<int> infectedComputers; // array of indexes for infected computers
     void scheduleFix(int time, int target);  //Schedule a computer to be fixed. It can be compromised again.
+    vector<int> infectedComputers; // array of indexes for infected computers
+    void addInfected(int networkIndex);
+    void removeInfected(int networkIndex);
 };
 
 //IDS DECLARATIONS *************************************************************************************/
-class IDS
+class IDS: public SysAdmin
 {
 public:
     IDS();
     IDS(int rate);
-    void notify(int attacker, int victim); // generates event to notify sysAdmin
+    void notify(class Network myNetwork, int attacker, int victim); // generates event to notify sysAdmin
 private:
     int detectRate;
-    bool detectedAttack(int rate);
+    bool detectedAttack(class Network myNetwork);
 };
 
+
 //NETWORK DECLARATIONS *************************************************************************************
-class Network: public Computer, public IDS, public SysAdmin
+class Network: public Computer, public SysAdmin , public IDS
 {
     friend class Computer;
+    friend class SysAdmin;
+    friend class IDS;
 public:
     Network();
-    Network(int size); //initializes network of computers with the halfway point seperating left/right
-    bool compromised;
+    Network(int size);   //initializes network of computers with the halfway point seperating left/right
+    bool compromised();  //checks if the network has be taken over
     vector<Computer> network;
+
 private:
     int networkSize;
+    int dividerIndex; 
     int percentCompromised;
     void generateTarget(Computer x); //get random int for target
-    
 };
 
 

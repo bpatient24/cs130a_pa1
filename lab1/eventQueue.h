@@ -41,7 +41,7 @@ public:
 private:
     bool isFix; //fix or attack
     int time;
-    int source;
+    int source; // -1 = attacker ; -2  = sysadmin
     int target;
     int eventIndex;
 };
@@ -49,10 +49,9 @@ private:
 
 class EventQueue: public Event {
 private:
-    Event *priorityQueue;
+    Event *event;
     int heapSize;
     int arraySize;
-    int dividerIndex;
     
     int getLeftChildIndex(int nodeIndex)
     {
@@ -77,10 +76,9 @@ public:
     
     EventQueue(int size)
     {
-        priorityQueue = new Event[size];
+        event = new Event[size];
         heapSize = 0;
         arraySize = size;
-        dividerIndex = 0;
     }
     
     int getMinimum()
@@ -88,7 +86,7 @@ public:
         if (isEmpty())
             throw string("QUEUE IS EMPTY");
         else
-            return priorityQueue[0].time;
+            return event[0].time;
     }
     
     bool isEmpty()
@@ -103,7 +101,7 @@ public:
     
     ~EventQueue()
     {
-        delete[] priorityQueue;
+        delete[] event;
     }
     
     //move up in the heap until sorted
@@ -114,11 +112,11 @@ public:
         if (nodeIndex != 0)
         {
             parentIndex = getParentIndex(nodeIndex);
-            if (priorityQueue[parentIndex].time> priorityQueue[nodeIndex].time)
+            if (event[parentIndex].time> event[nodeIndex].time)
             {
-                temp = priorityQueue[parentIndex];
-                priorityQueue[parentIndex] = priorityQueue[nodeIndex];
-                priorityQueue[nodeIndex] = temp;
+                temp = event[parentIndex];
+                event[parentIndex] = event[nodeIndex];
+                event[nodeIndex] = temp;
                 percolateUp(parentIndex);
             }
         }
@@ -143,16 +141,16 @@ public:
         }
         else
         {
-            if (priorityQueue[leftChildIndex].time <= priorityQueue[rightChildIndex].time)
+            if (event[leftChildIndex].time <= event[rightChildIndex].time)
                 minIndex = leftChildIndex;
             else
                 minIndex = rightChildIndex;
         }
-        if (priorityQueue[nodeIndex].time > priorityQueue[minIndex].time)
+        if (event[nodeIndex].time > event[minIndex].time)
         {
-            temp = priorityQueue[minIndex];
-            priorityQueue[minIndex] = priorityQueue[nodeIndex];
-            priorityQueue[nodeIndex] = temp;
+            temp = event[minIndex];
+            event[minIndex] = event[nodeIndex];
+            event[nodeIndex] = temp;
             percolateDown(minIndex);
         }
     }
@@ -163,7 +161,7 @@ public:
             throw string("QUEUE IS EMPTY");
         else
         {
-            if(priorityQueue[0].isFix)
+            if(event[0].isFix)
             {
                 //dipatch fix event
             }
@@ -172,26 +170,26 @@ public:
                 // dispatch attack event
             }
             //remove event from queue
-            priorityQueue[0] = priorityQueue[heapSize - 1];
+            event[0] = event[heapSize - 1];
             heapSize--;
             if (heapSize > 0)
                 percolateDown(0);
         }
     }
     // create event to insert in queue
-    void insert(Event event)
+    void addEvent(Event action)
     {
         if (isFull())
         {
             //growArray(arraySize * 2);
-            priorityQueue[arraySize + 1] = event;
+            event[arraySize + 1] = action;
             arraySize++;
             heapSize++;
         }
         else
         {
             heapSize++;
-            priorityQueue[heapSize - 1] = event;
+            event[heapSize - 1] = action;
             percolateUp(heapSize - 1);
         }
     }
@@ -206,5 +204,7 @@ public:
         //half the array
     }*/
 };
+
+EventQueue *priorityQueue;
 
 #endif /* eventQueue_h */

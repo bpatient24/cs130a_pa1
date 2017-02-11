@@ -20,7 +20,7 @@ int simulateAttack(int numComputers, int attackPercent, int detectPercent)
     double time = 0; //time in ms
     double maxTime = 8640000000;
     Network networkUnderAttack = Network(numComputers);
-    while( (networkUnderAttack.compromised != true) || (time < maxTime) ) // add exit for 100% fixed network
+    while( (networkUnderAttack.compromised() != true) || (time < maxTime) ) // add exit for 100% fixed network
     {
         
     }

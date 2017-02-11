@@ -25,7 +25,7 @@ bool Attacker::succesfulAttack()
 }
 
 void Attacker::attack(int time, int source, int target) // generates event to notify sysAdmin
-{
+{                                                       // source == -1 for attacker
     if(succesfulAttack())
     {
         //add attack to event queue
