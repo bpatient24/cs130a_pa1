@@ -9,6 +9,7 @@
 #include "network.hpp"
 #include <stdlib.h>
 #include <iostream>
+#include "eventQueue.h"
 
 //COMPUTER DECLARATIONS *************************************************************************************
 // computer default constructor
@@ -55,10 +56,13 @@ IDS::IDS(int rate)
     cout << "IDS Initialized" << endl;
 };
 
+bool IDS::detectedAttack(int rate)
+{
+    return (rand() % 100 + 1) >= (100 - detectRate);
+}
+
 void IDS::notify(int attacker, int victim)
 {
-    int attackerIndex = attacker;
-    int victimIndex = victim;
     
 }
 

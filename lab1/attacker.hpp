@@ -10,6 +10,7 @@
 #define attacker_hpp
 
 #include <stdio.h>
+
 class Attacker
 {
 public:
@@ -17,7 +18,8 @@ public:
     Attacker(int rate);
     void attack(int time, int source, int target); // generates event to notify sysAdmin
 private:
-    int detectRate;
+    int successRate;
+    bool succesfulAttack();
 };
 
 #endif /* attacker_hpp */

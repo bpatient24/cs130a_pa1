@@ -11,7 +11,6 @@
 
 #include <stdio.h>
 #include <vector>
-#include "eventQueue.h"
 
 using namespace std;
 
@@ -39,6 +38,7 @@ class SysAdmin
 public:
     SysAdmin();
     void fix(int time, int target);
+    void processAlert();// TODO process the notify event
 private:
     vector<int> infectedComputers; // array of indexes for infected computers
     void scheduleFix(int time, int target);  //Schedule a computer to be fixed. It can be compromised again.
@@ -51,9 +51,9 @@ public:
     IDS();
     IDS(int rate);
     void notify(int attacker, int victim); // generates event to notify sysAdmin
-    bool detectAttack(int rate);
 private:
     int detectRate;
+    bool detectedAttack(int rate);
 };
 
 //NETWORK DECLARATIONS *************************************************************************************

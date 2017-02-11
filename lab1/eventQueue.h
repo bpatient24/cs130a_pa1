@@ -29,7 +29,7 @@ public:
         target = NULL;
         eventIndex = NULL;
     }
-    // consturctor
+    // constructor
     Event(bool fix, int timeForEvent, int eventSource, int targetForEvent)
     {
         isFix = fix;
@@ -196,15 +196,15 @@ public:
         }
     }
     
-    void growArray(int size)
+    /*void growArray(int size)
     {
         
-    }
+    }*/
     
-    void shrinkArray(int size)
+    /*void shrinkArray(int size)
     {
         //half the array
-    }
+    }*/
 };
 
 #endif /* eventQueue_h */

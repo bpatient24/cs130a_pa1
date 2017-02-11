@@ -7,16 +7,27 @@
 //
 
 #include "attacker.hpp"
+#include <stdlib.h>
+#include <iostream>
 
 Attacker::Attacker()
 {
-    
+    Attacker(50);
 }
 Attacker::Attacker(int rate)
 {
-    
+    successRate = rate;
 }
+
+bool Attacker::succesfulAttack()
+{
+    return (rand() % 100 + 1) >= (100 - successRate);
+}
+
 void Attacker::attack(int time, int source, int target) // generates event to notify sysAdmin
 {
-    
+    if(succesfulAttack())
+    {
+        //add attack to event queue
+    }
 }
