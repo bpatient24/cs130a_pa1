@@ -34,18 +34,20 @@ int simulateAttack(int numComputers, int attackPercent, int detectPercent)
         //do stuff
         if(globaltime % 1000 == 0 && globaltime % 10000 !=0)
         {
+            cout << "Reached Case 1" << endl;
             //do stuff every second
             int attackerTarget = rand() % networkUnderAttack.networkSize + 1;
             attacker.scheduleAttack(*priorityQueue, globaltime + 100, -1, attackerTarget);// attackers attack
             for(int i = 0; i < sysadmin.infectedComputers.size(); i++)
             {
-                networkUnderAttack.generateTarget(networkUnderAttack.network[sysadmin.infectedComputers[i]]);
+                networkUnderAttack.generateTarget(networkUnderAttack.network[sysadmin.infectedComputers.at(i)]);
                 networkUnderAttack.generateTarget(networkUnderAttack.network[i]);
-                attacker.scheduleAttack (*priorityQueue, globaltime + 100, sysadmin.infectedComputers[i], networkUnderAttack.network[i].target);
+                attacker.scheduleAttack (*priorityQueue, globaltime + 100, sysadmin.infectedComputers.at(i), networkUnderAttack.network[i].target);
             }
         }
         else if(globaltime % 1000 == 100)
         {
+            cout << "Reached Case 2" << endl;
             // do stuff with latencies
             while(priorityQueue[0].time == globaltime)
             {
@@ -66,14 +68,23 @@ int simulateAttack(int numComputers, int attackPercent, int detectPercent)
                 }
             }
         }
-        /*else if(globaltime % 10000 == 0)
+        else if(globaltime % 10000 == 0)
         {
+            
             //schedule fixes
-            if(sysadmin.infectedComputers[0])
-            {
-                sysadmin.scheduleFix(*priorityQueue, globaltime + 100, sysadmin.infectedComputers[0]);
+            try{
+                sysadmin.scheduleFix(*priorityQueue, globaltime + 100, sysadmin.infectedComputers.at(0));
             }
-        }*/
+            catch (out_of_range){
+                sysadmin.infectedComputers.resize(10);
+                cout << "SOMETHING" << endl;
+            }
+            /*if((sysadmin.infectedComputers.empty()))
+            {
+                cout << sysadmin.infectedComputers.at(0) << endl;
+                sysadmin.scheduleFix(*priorityQueue, globaltime + 100, sysadmin.infectedComputers.at(0));
+            }*/
+        }
         
         exit = (networkUnderAttack.compromised() == true) && (globaltime < maxTime) && ((firstLoop) || !(networkUnderAttack.percentCompromised == 0));
         
@@ -92,6 +103,7 @@ int simulateAttack(int numComputers, int attackPercent, int detectPercent)
                 exitCode = 3;
             }
         }
+        //cout << globaltime << endl;
         globaltime += 100;
     }
     return exitCode;

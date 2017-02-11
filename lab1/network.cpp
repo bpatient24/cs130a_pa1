@@ -71,15 +71,16 @@ void SysAdmin::processNotify(Network network, int attacker, int victim)
     addInfected(victim);
 }
 
-void SysAdmin::addInfected(int index)
-{
-    //infectedComputers.get_allocator().allocate(1);
-    infectedComputers.push_back(index);
-}
-
 void SysAdmin::percentInfected(Network net)
 {
-   net.percentCompromised = (infectedComputers.size() / net.networkSize);
+    net.percentCompromised = (infectedComputers.size() / net.networkSize);
+}
+
+void SysAdmin::addInfected(int index)
+{
+    cout << "VECTOR" << infectedComputers.size() << endl;
+    //infectedComputers.get_allocator().allocate(2);
+    infectedComputers.push_back(index);
 }
 
 void SysAdmin::removeInfected(int index)

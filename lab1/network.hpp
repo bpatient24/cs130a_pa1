@@ -17,7 +17,7 @@ using namespace std;
 //COMPUTER DECLARATIONS *************************************************************************************
 class Computer
 {
-    friend class Network;
+    //friend class Network;
 public:
     //member functions
     void compromise();      //sets compromised to true.
@@ -25,16 +25,17 @@ public:
     Computer();
     Computer(int location);
     int target;
-private:
     bool compromised;
     int location;
+//private:
+
 };
 
 //SYSADMIN DECLARATIONS *************************************************************************************
 class SysAdmin
 {
-    friend class IDS;
-    friend class Network;
+    //friend class IDS;
+    //friend class Network;
 public:
     SysAdmin();
     void fix(class Network network, int target);
@@ -42,9 +43,10 @@ public:
     vector<int> infectedComputers;
     void percentInfected(Network net);
     void scheduleFix(class EventQueue x,unsigned long long int time, int target);  //Schedule a computer to be fixed. It can be compromised again.
-private:
     void addInfected(int networkIndex);
     void removeInfected(int networkIndex);
+//private:
+
 };
 
 //IDS DECLARATIONS *************************************************************************************/
@@ -54,18 +56,18 @@ public:
     IDS();
     IDS(int rate);
     void notify(class Network myNetwork, class SysAdmin sys, int attacker, int victim); // generates event to notify sysAdmin
-private:
     int detectRate;
     bool detectedAttack(class Network myNetwork);
+//private:
 };
 
 
 //NETWORK DECLARATIONS *************************************************************************************
 class Network: public Computer, public IDS
 {
-    friend class Computer;
-    friend class SysAdmin;
-    friend class IDS;
+    //friend class Computer;
+    //friend class SysAdmin;
+    //friend class IDS;
 public:
     Network();
     Network(int size);   //initializes network of computers with the halfway point seperating left/right

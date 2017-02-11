@@ -18,9 +18,9 @@ using namespace std;
 
 class Event
 {
-    friend class EventQueue;
+    //friend class EventQueue;
 public:
-
+    
     unsigned long long int time;
     int target;
     bool isFix; //fix or attack
@@ -50,7 +50,8 @@ public:
 
 
 class EventQueue: public Event {
-private:
+//private:
+public:
     Event *event;
     int heapSize;
     int arraySize;
@@ -70,10 +71,12 @@ private:
         return (nodeIndex - 1) / 2;
     }
     
-public:
     EventQueue()
     {
-        EventQueue(100);
+        //EventQueue(10);
+        event = new Event[10];
+        heapSize = 0;
+        arraySize = 10;
     }
     
     EventQueue(int size)
@@ -101,14 +104,15 @@ public:
         return (heapSize == arraySize);
     }
     
-    ~EventQueue()
-    {
-        delete[] event;
-    }
+    /*~EventQueue()
+     {
+     delete[] event;
+     }*/
     
     //move up in the heap until sorted
     void percolateUp(int nodeIndex)
     {
+        //cout << "TEST" << endl;
         int parentIndex;
         Event temp;
         if (nodeIndex != 0)
@@ -182,8 +186,11 @@ public:
         }
         else
         {
+            cout << "hi" << endl;
             heapSize++;
+            cout << heapSize << ", " << arraySize << endl;
             event[heapSize - 1] = action;
+            cout << "bye" << endl;
             percolateUp(heapSize - 1);
         }
     }

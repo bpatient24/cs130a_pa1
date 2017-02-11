@@ -18,9 +18,9 @@ public:
     Attacker(int rate);
     void attack(class Network network, int source, int target); // generates event to notify sysAdmin
     void scheduleAttack(class EventQueue x, unsigned long long int time, int source, int target);
-private:
     int successRate;
     bool succesfulAttack();
+//private:
 };
 
 #endif /* attacker_hpp */
