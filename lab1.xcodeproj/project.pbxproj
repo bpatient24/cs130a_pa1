@@ -10,7 +10,6 @@
 		3A5F265F1E4C5F7400F1F017 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A5F265E1E4C5F7400F1F017 /* main.cpp */; };
 		3A5F266D1E4C616B00F1F017 /* network.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A5F266B1E4C616B00F1F017 /* network.cpp */; };
 		3A5F26701E4C617200F1F017 /* attacker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A5F266E1E4C617200F1F017 /* attacker.cpp */; };
-		3AB56D4E1E4D7FCD00F56C4C /* eventQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AB56D4C1E4D7FCD00F56C4C /* eventQueue.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -32,8 +31,7 @@
 		3A5F266C1E4C616B00F1F017 /* network.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = network.hpp; sourceTree = "<group>"; };
 		3A5F266E1E4C617200F1F017 /* attacker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = attacker.cpp; sourceTree = "<group>"; };
 		3A5F266F1E4C617200F1F017 /* attacker.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = attacker.hpp; sourceTree = "<group>"; };
-		3AB56D4C1E4D7FCD00F56C4C /* eventQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = eventQueue.cpp; sourceTree = "<group>"; };
-		3AB56D4D1E4D7FCD00F56C4C /* eventQueue.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = eventQueue.hpp; sourceTree = "<group>"; };
+		3AA4A8A71E4E8EE200D97378 /* eventQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = eventQueue.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,9 +64,8 @@
 		3A5F265D1E4C5F7400F1F017 /* lab1 */ = {
 			isa = PBXGroup;
 			children = (
+				3AA4A8A71E4E8EE200D97378 /* eventQueue.h */,
 				3A5F265E1E4C5F7400F1F017 /* main.cpp */,
-				3AB56D4C1E4D7FCD00F56C4C /* eventQueue.cpp */,
-				3AB56D4D1E4D7FCD00F56C4C /* eventQueue.hpp */,
 				3A5F266B1E4C616B00F1F017 /* network.cpp */,
 				3A5F266C1E4C616B00F1F017 /* network.hpp */,
 				3A5F266E1E4C617200F1F017 /* attacker.cpp */,
@@ -134,7 +131,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A5F266D1E4C616B00F1F017 /* network.cpp in Sources */,
-				3AB56D4E1E4D7FCD00F56C4C /* eventQueue.cpp in Sources */,
 				3A5F265F1E4C5F7400F1F017 /* main.cpp in Sources */,
 				3A5F26701E4C617200F1F017 /* attacker.cpp in Sources */,
 			);

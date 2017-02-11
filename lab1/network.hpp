@@ -11,8 +11,11 @@
 
 #include <stdio.h>
 #include <vector>
+#include "eventQueue.h"
+
 using namespace std;
 
+//COMPUTER DECLARATIONS *************************************************************************************
 class Computer
 {
     friend class Network;
@@ -20,35 +23,40 @@ public:
     //member functions
     void compromise();      //sets compromised to true.
     void fix();             //sets compromise to false.
-private:
     Computer();
     Computer(int location);
+private:
     int target;
     bool compromised;
     int location;
 };
 
+//SYSADMIN DECLARATIONS *************************************************************************************
 class SysAdmin
 {
     friend class IDS;
+    friend class Network;
 public:
-    void alert();
+    SysAdmin();
+    void fix(int time, int target);
 private:
     vector<int> infectedComputers; // array of indexes for infected computers
-    void fix(int time, int target);  //Schedule a computer to be fixed. It can be compromised again.
+    void scheduleFix(int time, int target);  //Schedule a computer to be fixed. It can be compromised again.
 };
 
+//IDS DECLARATIONS *************************************************************************************/
 class IDS
 {
 public:
     IDS();
     IDS(int rate);
     void notify(int attacker, int victim); // generates event to notify sysAdmin
+    bool detectAttack(int rate);
 private:
     int detectRate;
 };
 
-
+//NETWORK DECLARATIONS *************************************************************************************
 class Network: public Computer, public IDS, public SysAdmin
 {
     friend class Computer;

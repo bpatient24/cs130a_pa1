@@ -8,6 +8,7 @@
 
 #include "network.hpp"
 #include <stdlib.h>
+#include <iostream>
 
 //COMPUTER DECLARATIONS *************************************************************************************
 // computer default constructor
@@ -36,7 +37,10 @@ void Computer::fix()         //sets compromise to false.
     compromised = false;
 };
 //SYSADMIN DECLARATIONS *************************************************************************************
-
+SysAdmin::SysAdmin()
+{
+    cout << "SysAdmind Initialized" << endl;
+}
 
 //IDS DECLARATIONS *************************************************************************************
 //default constructor
@@ -48,6 +52,7 @@ IDS::IDS()
 IDS::IDS(int rate)
 {
     detectRate = rate;
+    cout << "IDS Initialized" << endl;
 };
 
 void IDS::notify(int attacker, int victim)
@@ -62,6 +67,7 @@ void IDS::notify(int attacker, int victim)
 Network::Network()
 {
     network[0] = Computer(0);
+    cout << "Network default constructor" << endl;
 }
 //network constructor
 Network::Network(int size)
@@ -70,6 +76,7 @@ Network::Network(int size)
     {
         network.push_back(Computer(i));
     }
+    cout << "Network Properly Initialized" << endl;
 }
 
 //target

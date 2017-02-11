@@ -8,7 +8,7 @@
 
 #include <iostream>
 #include <string>
-#include "eventQueue.hpp"
+#include "eventQueue.h"
 #include "network.hpp"
 #include "attacker.hpp"
 
