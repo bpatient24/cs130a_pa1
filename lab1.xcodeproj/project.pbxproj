@@ -32,6 +32,11 @@
 		3A5F266E1E4C617200F1F017 /* attacker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = attacker.cpp; sourceTree = "<group>"; };
 		3A5F266F1E4C617200F1F017 /* attacker.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = attacker.hpp; sourceTree = "<group>"; };
 		3A7F7F131E4FEF6300E31F70 /* event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = event.h; sourceTree = "<group>"; };
+		3A7F7F321E5030C800E31F70 /* attacker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = attacker.h; sourceTree = "<group>"; };
+		3A7F7F331E5030E000E31F70 /* network.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = network.h; sourceTree = "<group>"; };
+		3A7F7F351E5031A100E31F70 /* ids.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ids.h; path = ../ids.h; sourceTree = "<group>"; };
+		3A7F7F361E5031B200E31F70 /* sysadmin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sysadmin.h; sourceTree = "<group>"; };
+		3A7F7F371E5031BF00E31F70 /* computer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = computer.h; sourceTree = "<group>"; };
 		3AA4A8A91E4ED33500D97378 /* outputs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = outputs.h; sourceTree = "<group>"; };
 		3AA4A8AB1E4EF77100D97378 /* eventQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = eventQueue.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -74,6 +79,11 @@
 				3A5F265E1E4C5F7400F1F017 /* main.cpp */,
 				3AA4A8AB1E4EF77100D97378 /* eventQueue.h */,
 				3A7F7F131E4FEF6300E31F70 /* event.h */,
+				3A7F7F331E5030E000E31F70 /* network.h */,
+				3A7F7F361E5031B200E31F70 /* sysadmin.h */,
+				3A7F7F371E5031BF00E31F70 /* computer.h */,
+				3A7F7F351E5031A100E31F70 /* ids.h */,
+				3A7F7F321E5030C800E31F70 /* attacker.h */,
 			);
 			path = lab1;
 			sourceTree = "<group>";

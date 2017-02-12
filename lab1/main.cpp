@@ -9,9 +9,14 @@
 #include <iostream>
 #include <string>
 #include "eventQueue.h"
-#include "network.hpp"
-#include "attacker.hpp"
+#include "network.h"
+#include "attacker.h"
 #include "outputs.h"
+#include "sysadmin.h"
+#include "ids.h"
+#include "computer.h"
+#include "event.h"
+
 //#include "network.h"
 
 using namespace std;

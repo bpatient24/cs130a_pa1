@@ -23,7 +23,6 @@ public:
     SysAdmin();
     void fix(class Network network,int target);
     void processNotify(int time, int attacker, int victim);//process the notify event
-    void percentInfected(class Network net);
     void scheduleFix(EventQueue<Event> z, long time, int target);  //Schedule a computer to be fixed. It can be compromised again.
     //private:
     
