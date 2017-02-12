@@ -30,9 +30,9 @@ public:
     EventQueue()
     {
         //EventQueue(10);
-        queue = new Event[10];
+        queue = new Event[100];
         heapSize = 0;
-        arraySize = 10;
+        arraySize = 100;
     }
     
     EventQueue(int size)
@@ -91,6 +91,17 @@ public:
         percolateDown(1);
     }
     
+    int returnNextEventTime()
+    {
+        if(isEmpty())
+        {
+            cout << "NO QUEUE EVENTS" << endl;
+        }
+        Event next;
+        next = move(queue[1]);
+        return next.time;
+    }
+    
     int getLeftChildIndex(int nodeIndex)
     {
         return 2 * nodeIndex;
@@ -136,73 +147,6 @@ public:
         }
         queue[index] = move(queue[0]);
     }
-    
-    
-    //move up in the heap until sorted
-    /*void percolateUp(int nodeIndex)
-    {
-        //cout << "TEST" << endl;
-        int parentIndex;
-        Event temp;
-        if (nodeIndex != 0)
-        {
-            parentIndex = getParentIndex(nodeIndex);
-            if (queue[parentIndex]> queue[nodeIndex])
-            {
-                temp = queue[parentIndex];
-                queue[parentIndex] = queue[nodeIndex];
-                queue[nodeIndex] = temp;
-                percolateUp(parentIndex);
-            }
-        }
-    }
-    //move down in heap until sorted
-    void percolateDown(int nodeIndex)
-    {
-        int leftChildIndex;
-        int rightChildIndex;
-        int minIndex;
-        Event temp = move(queue[nodeIndex]);
-        
-        cout << "PERCOLATED DOWN 1" << endl;
-        
-        leftChildIndex = getLeftChildIndex(nodeIndex);
-        rightChildIndex = getRightChildIndex(nodeIndex);
-        
-        if (rightChildIndex >= heapSize)
-        {
-            if (leftChildIndex >= heapSize)
-                return;
-            else
-                minIndex = leftChildIndex;
-        }
-        else
-        {
-            if (queue[leftChildIndex] <= queue[rightChildIndex])
-                minIndex = leftChildIndex;
-            else
-                minIndex = rightChildIndex;
-        }
-        if (queue[nodeIndex] > queue[minIndex])
-        {
-            temp = queue[minIndex];
-            queue[minIndex] = queue[nodeIndex];
-            queue[nodeIndex] = temp;
-            percolateDown(minIndex);
-        }
-    }*/
-    
-    //void doubleArray(int size)
-    
-    
-    /*Event &operator[] (int i)
-    {
-        if(i > arraySize)
-        {
-            cout << "OUT OF BOUNDS" << endl;
-        }
-        return queue[i];
-    }*/
 };
 
 #endif /* eventQueue_h */

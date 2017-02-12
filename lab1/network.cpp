@@ -53,11 +53,11 @@ void SysAdmin::fix(class Network network, int fixTarget)
     //removeInfected(fixTarget);
 }
 
-void SysAdmin::scheduleFix(EventQueue <Event> *x, long time, int target)
+void SysAdmin::scheduleFix(EventQueue <Event> x, long time, int target)
 {
     Event fix;
     fix = Event(true, time, -2, target);
-    x->addEvent(fix);
+    x.addEvent(fix);
 }
 
 void SysAdmin::processNotify(Network network, int attacker, int victim)
@@ -66,28 +66,28 @@ void SysAdmin::processNotify(Network network, int attacker, int victim)
     if(attacker > -1) //attacker is not attacker agent
     {
         //add attacker
-        //addInfected(attacker);
+        addInfected(attacker);
     }
     //add victim
-    //addInfected(victim);
+    addInfected(victim);
 }
 
-/*void SysAdmin::percentInfected(Network net)
+void SysAdmin::percentInfected(Network net)
 {
     net.percentCompromised = (infectedComputers.size() / net.networkSize);
-}*/
+}
 
-/*void SysAdmin::addInfected(int index)
+void SysAdmin::addInfected(int index)
 {
     cout << "VECTOR" << infectedComputers.size() << endl;
     //infectedComputers.get_allocator().allocate(2);
     infectedComputers.push_back(index);
-}*/
+}
 
-/*void SysAdmin::removeInfected(int index)
+void SysAdmin::removeInfected(int index)
 {
     infectedComputers.erase(remove(infectedComputers.begin(), infectedComputers.end(), index), infectedComputers.end());
-}*/
+}
 
 //IDS DECLARATIONS *************************************************************************************
 //default constructor

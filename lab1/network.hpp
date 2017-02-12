@@ -25,11 +25,11 @@ public:
     SysAdmin();
     void fix(class Network network, int target);
     void processNotify(Network network, int attacker, int victim);//process the notify event
-    //vector<int> infectedComputers;
+    vector<int> infectedComputers;
     void percentInfected(Network net);
-    void scheduleFix(EventQueue<Event> *z, long time, int target);  //Schedule a computer to be fixed. It can be compromised again.
-    //void addInfected(int networkIndex);
-    //void removeInfected(int networkIndex);
+    void scheduleFix(EventQueue<Event> z, long time, int target);  //Schedule a computer to be fixed. It can be compromised again.
+    void addInfected(int networkIndex);
+    void removeInfected(int networkIndex);
     //private:
     
 };
@@ -67,9 +67,6 @@ public:
 //NETWORK DECLARATIONS *************************************************************************************
 class Network
 {
-    //friend class Computer;
-    //friend class SysAdmin;
-    //friend class IDS;
 public:
     Network();
     Network(int size);   //initializes network of computers with the halfway point seperating left/right
