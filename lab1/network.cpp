@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <iostream>
 //#include "eventQueue.h"
+#include "outputs.h"
 
 //COMPUTER DECLARATIONS *************************************************************************************
 // computer default constructor
@@ -60,19 +61,20 @@ void SysAdmin::scheduleFix(EventQueue <Event> x, long time, int target)
     x.addEvent(fix);
 }
 
-void SysAdmin::processNotify(Network network, int attacker, int victim)
+void SysAdmin::processNotify(int time, int attacker, int victim)
 {
     //add infected to vector
     if(attacker > -1) //attacker is not attacker agent
     {
         //add attacker
-        addInfected(attacker);
+        //addInfected(attacker);
+        notifyMessage(time, attacker, victim);
     }
     //add victim
-    addInfected(victim);
+    //addInfected(victim);
 }
 
-void SysAdmin::percentInfected(Network net)
+/*void SysAdmin::percentInfected(Network net)
 {
     net.percentCompromised = (infectedComputers.size() / net.networkSize);
 }
@@ -87,7 +89,7 @@ void SysAdmin::addInfected(int index)
 void SysAdmin::removeInfected(int index)
 {
     infectedComputers.erase(remove(infectedComputers.begin(), infectedComputers.end(), index), infectedComputers.end());
-}
+}*/
 
 //IDS DECLARATIONS *************************************************************************************
 //default constructor
@@ -107,13 +109,13 @@ bool IDS::detectedAttack()
     return (rand() % 100 + 1) >= (100 - detectRate);
 }
 
-void IDS::notify(Network network, SysAdmin sys, int attacker, int victim)
+void IDS::notify(Network network, int time, int attacker, int victim)
 {
     if(attacker == -1)
     {
         if(detectedAttack())
         {
-            sys.processNotify(network, attacker, victim);
+            notifyMessage(time, attacker, victim);
         }
     }
     else
@@ -122,7 +124,7 @@ void IDS::notify(Network network, SysAdmin sys, int attacker, int victim)
         {
             if(detectedAttack())
             {
-                sys.processNotify(network, attacker, victim);
+                notifyMessage(time, attacker, victim);
             }
         }
     }

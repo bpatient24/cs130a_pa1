@@ -24,12 +24,12 @@ class SysAdmin
 public:
     SysAdmin();
     void fix(class Network network, int target);
-    void processNotify(Network network, int attacker, int victim);//process the notify event
-    vector<int> infectedComputers;
+    void processNotify(int time, int attacker, int victim);//process the notify event
+    //vector<int> infectedComputers;
     void percentInfected(Network net);
     void scheduleFix(EventQueue<Event> z, long time, int target);  //Schedule a computer to be fixed. It can be compromised again.
-    void addInfected(int networkIndex);
-    void removeInfected(int networkIndex);
+    //void addInfected(int networkIndex);
+    //void removeInfected(int networkIndex);
     //private:
     
 };
@@ -57,7 +57,7 @@ class IDS //: public SysAdmin
 public:
     IDS();
     IDS(int rate);
-    void notify(Network myNetwork,SysAdmin sys, int attacker, int victim); // generates event to notify sysAdmin
+    void notify(Network myNetwork, int time, int attacker, int victim); // generates event to notify sysAdmin
     int detectRate;
     bool detectedAttack();
 //private:

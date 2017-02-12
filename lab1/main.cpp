@@ -16,6 +16,8 @@
 
 using namespace std;
 
+
+
 // -1 = attacker ; -2  = sysadmin
 int simulateAttack(int numComputers, int attackPercent, int detectPercent)
 {
@@ -38,96 +40,66 @@ int simulateAttack(int numComputers, int attackPercent, int detectPercent)
     //cout << "TIME IS: " << priorityQueue->returnNextEventTime() << endl;
     //cout << "Heap Size is: " << priorityQueue->heapSize << endl;
     //priorityQueue->deleteMin(nextEvent);
-    attacker.scheduleAttack(*priorityQueue, 100, -1, rand() % networkUnderAttack.networkSize + 1);
+    attacker.scheduleAttack(*priorityQueue, 1000, -1, rand() % networkUnderAttack.networkSize + 1);
     
     while(!exit)
     {
-        //do stuff
-        if(globaltime % 1000 == 0 && globaltime % 10000 != 0)
+        priorityQueue->deleteMin(nextEvent);
+        globaltime += nextEvent.time;
+        if(nextEvent.isFix)
         {
-            //cout << "Reached Case 1" << endl;
-            //do stuff every second
-            int attackerTarget = rand() % networkUnderAttack.networkSize + 1;
-            attacker.scheduleAttack(*priorityQueue, globaltime + 100, -1, attackerTarget);// attackers attack
+            //dipatch fix event
+            //cout << "TRIED TO DISPATCH FIX" << endl;
+            sysadmin.fix(networkUnderAttack, nextEvent.target);
+            fixMessage(globaltime, nextEvent.target);
+        }
+        else
+        {
+            // dispatch attack event
+            //cout << "TRIED TO DISPATCH ATTACK" << endl;
             
-            for(int i = 0; i < sysadmin.infectedComputers.size(); i++)
+            if(nextEvent.source == -1)
+            {
+                int attackerTarget = rand() % networkUnderAttack.networkSize + 1;
+                attacker.attack(networkUnderAttack, -1, attackerTarget);
+                ids.notify(networkUnderAttack, globaltime, nextEvent.source, attackerTarget);
+                for(int i = 0; i < networkUnderAttack.networkSize - 1; i++)
+                {
+                    if(networkUnderAttack.network[i].compromised == true)
+                    {
+                        int target = rand() % networkUnderAttack.networkSize + 1;
+                        attacker.scheduleAttack(*priorityQueue, 1000, i, target);
+                    }
+                }
+            }
+            else if(nextEvent.source > -1)
             {
                 int target = rand() % networkUnderAttack.networkSize + 1;
-                attacker.scheduleAttack(*priorityQueue, globaltime + 100, sysadmin.infectedComputers[i], target);
-            }
-            
-            /*for(int i = 0; i < networkUnderAttack.networkSize; i++)
-            {
-                if(networkUnderAttack.network[i].compromised == true)
-                {
-                    cout << "HELLO" << endl;
-                    networkUnderAttack.generateTarget(networkUnderAttack.network[i]);
-                    attacker.scheduleAttack (*priorityQueue, globaltime + 100, i, networkUnderAttack.network[i].target);
-                }
-                //networkUnderAttack.generateTarget(networkUnderAttack.network[sysadmin.infectedComputers.at(i)]);
-            }*/
-        }
-        else if(globaltime % 1000 == 100)
-        {
-            //cout << "Reached Case 2 at time " << globaltime << "TIMESTAMP: "  << priorityQueue[0].time << endl;
-            // do stuff with latencies
-            while(priorityQueue->returnNextEventTime() == globaltime)
-            {
-                priorityQueue->deleteMin(nextEvent);
-                if(nextEvent.isFix)
-                {
-                    //dipatch fix event
-                    //cout << "TRIED TO DISPATCH FIX" << endl;
-                    sysadmin.fix(networkUnderAttack, nextEvent.target);
-                    fixMessage(nextEvent.time, nextEvent.target);
-                }
-                else
-                {
-                    // dispatch attack event
-                    //cout << "TRIED TO DISPATCH ATTACK" << endl;
-                    attacker.attack(networkUnderAttack, nextEvent.source, nextEvent.target);
-                    attackMessage(nextEvent.time, nextEvent.source, nextEvent.target);
-                    ids.notify(networkUnderAttack, sysadmin, nextEvent.source, nextEvent.target);
-                }
+                attacker.attack(networkUnderAttack, nextEvent.source, target);
+                attackMessage(globaltime, nextEvent.source, target);
+                ids.notify(networkUnderAttack, globaltime, nextEvent.source, target);
             }
         }
-        else if(globaltime % 10000 == 0)
-        {
-            //cout << "Reached Case 3" << endl;
-            //schedule fixes
-            for(int i = 0; i < networkUnderAttack.networkSize; i++)
-            {
-                if(networkUnderAttack.network[i].compromised == true)
-                {
-                    sysadmin.scheduleFix(*priorityQueue, globaltime + 100, i);
-                    break;
-                }
-                //networkUnderAttack.generateTarget(networkUnderAttack.network[sysadmin.infectedComputers.at(i)]);
-            }
-        }
-        
-        exit = (networkUnderAttack.compromised() == true) && (globaltime < maxTime) && ((firstLoop) || !(networkUnderAttack.percentCompromised == 0));
-        firstLoop = false;
-        
-        if(exit)
-        {
-            if(networkUnderAttack.compromised() != true)
-            {
-                exitCode= 1;
-            }
-            else if((firstLoop) || !(networkUnderAttack.percentCompromised == 0))
-            {
-                exitCode = 2;
-            }
-            else if(globaltime < maxTime)
-            {
-                exitCode = 3;
-            }
-        }
-        //cout << "GLOBAL TIME = " << globaltime << endl;
-        globaltime += 100;
     }
-    return exitCode;
+    if(networkUnderAttack.compromised() == true)
+    {
+        exitCode= 2;
+        exit = true;
+    }
+    else if(!(firstLoop) && (networkUnderAttack.percentCompromised == 0))
+    {
+        exitCode = 1;
+        exit = true;
+    }
+    else if(globaltime > maxTime)
+    {
+        exitCode = 3;
+        exit = true;
+    }
+    cout << "GLOBAL TIME = " << globaltime << endl;
+    globaltime += 100;
+    firstLoop = false;
+return exitCode;
 }
 
 int main(int argc, const char * argv[]) {
