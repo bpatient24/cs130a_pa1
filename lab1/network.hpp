@@ -17,7 +17,7 @@ using namespace std;
 //COMPUTER DECLARATIONS *************************************************************************************
 class Computer
 {
-    //friend class Network;
+    friend class Network;
 public:
     //member functions
     void compromise();      //sets compromised to true.

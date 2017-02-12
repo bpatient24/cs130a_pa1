@@ -5,14 +5,14 @@
 //  Created by Ben Patient on 2/11/17.
 //  Copyright © 2017 Ben Patient. All rights reserved.
 //
-
+/*
 #ifndef network_h
 #define network_h
 
 #include <string>
 #include <stdlib.h>
 #include <iostream>
-#include "eventQueue.h"
+//#include "eventQueue.h"
 
 class Attacker
 {

@@ -12,6 +12,7 @@
 #include <string>
 #include <stdlib.h>
 #include <iostream>
+#include <utility>
 #include "network.hpp"
 
 using namespace std;
@@ -25,7 +26,7 @@ public:
     int target;
     bool isFix; //fix or attack
     int source; // -1 = attacker ; -2  = sysadmin
-    int eventIndex;
+    //int eventIndex;
     //default constructor
     Event()
     {
@@ -34,7 +35,7 @@ public:
         time = NULL;
         source = NULL;
         target = NULL;
-        eventIndex = NULL;
+        //eventIndex = NULL;
     }
     // constructor
     Event(bool fix, unsigned long long int timeForEvent, int eventSource, int targetForEvent)
@@ -48,13 +49,75 @@ public:
     //private:
 };
 
-
-class EventQueue: public Event {
-//private:
+template <typename Event>
+class EventQueue
+{
 public:
-    Event *event;
     int heapSize;
     int arraySize;
+    Event *queue = new Event[100];
+    
+    
+    //constructor
+    EventQueue()
+    {
+        //EventQueue(10);
+        queue = new Event[10];
+        heapSize = 0;
+        arraySize = 10;
+    }
+    
+    EventQueue(int size)
+    {
+        queue = new Event[size];
+        heapSize = 0;
+        arraySize = size;
+    }
+    
+    // create event to insert in queue
+    void addEvent(const Event &e)
+    {
+        if(heapSize == arraySize -1)
+        {
+            doubleArray(arraySize);
+        }
+        
+        
+        int oldSize = ++arraySize;
+        Event copy = e;
+        
+        //queue[oldSize] = copy;
+       // percolateUp(oldSize);
+        
+        queue[0] = move(copy);
+        for( ; copy < queue[oldSize/2]; oldSize /= 2)
+        {
+            queue[oldSize] = move(queue[oldSize/2]);
+        }
+        queue[oldSize] = move(queue[0]);
+    }
+    
+    bool isEmpty()
+    {
+        return (heapSize == 0);
+    }
+    
+    bool isFull()
+    {
+        return (heapSize == arraySize);
+    }
+    
+    void deleteMin(Event &nextEvent)
+    {
+        if(isEmpty())
+        {
+            cout << "NO QUEUE EVENTS" << endl;
+        }
+        
+        nextEvent = move(queue[1]);
+        queue[1] = move (queue[arraySize--]);
+        percolateDown(1);
+    }
     
     int getLeftChildIndex(int nodeIndex)
     {
@@ -71,44 +134,6 @@ public:
         return (nodeIndex - 1) / 2;
     }
     
-    EventQueue()
-    {
-        //EventQueue(10);
-        event = new Event[10];
-        heapSize = 0;
-        arraySize = 10;
-    }
-    
-    EventQueue(int size)
-    {
-        event = new Event[size];
-        heapSize = 0;
-        arraySize = size;
-    }
-    
-    unsigned long long int getMinimum()
-    {
-        if (isEmpty())
-            throw string("QUEUE IS EMPTY");
-        else
-            return event[0].time;
-    }
-    
-    bool isEmpty()
-    {
-        return (heapSize == 0);
-    }
-    
-    bool isFull()
-    {
-        return (heapSize == arraySize);
-    }
-    
-    /*~EventQueue()
-     {
-     delete[] event;
-     }*/
-    
     //move up in the heap until sorted
     void percolateUp(int nodeIndex)
     {
@@ -118,11 +143,11 @@ public:
         if (nodeIndex != 0)
         {
             parentIndex = getParentIndex(nodeIndex);
-            if (event[parentIndex].time> event[nodeIndex].time)
+            if (queue[parentIndex]> queue[nodeIndex])
             {
-                temp = event[parentIndex];
-                event[parentIndex] = event[nodeIndex];
-                event[nodeIndex] = temp;
+                temp = queue[parentIndex];
+                queue[parentIndex] = queue[nodeIndex];
+                queue[nodeIndex] = temp;
                 percolateUp(parentIndex);
             }
         }
@@ -133,7 +158,9 @@ public:
         int leftChildIndex;
         int rightChildIndex;
         int minIndex;
-        Event temp;
+        Event temp = move(queue[nodeIndex]);
+        
+        cout << "PERCOLATED DOWN 1" << endl;
         
         leftChildIndex = getLeftChildIndex(nodeIndex);
         rightChildIndex = getRightChildIndex(nodeIndex);
@@ -147,51 +174,17 @@ public:
         }
         else
         {
-            if (event[leftChildIndex].time <= event[rightChildIndex].time)
+            if (queue[leftChildIndex] <= queue[rightChildIndex])
                 minIndex = leftChildIndex;
             else
                 minIndex = rightChildIndex;
         }
-        if (event[nodeIndex].time > event[minIndex].time)
+        if (queue[nodeIndex] > queue[minIndex])
         {
-            temp = event[minIndex];
-            event[minIndex] = event[nodeIndex];
-            event[nodeIndex] = temp;
+            temp = queue[minIndex];
+            queue[minIndex] = queue[nodeIndex];
+            queue[nodeIndex] = temp;
             percolateDown(minIndex);
-        }
-    }
-    //dispatch event
-    void removeMin()
-    {
-        if (isEmpty())
-            throw string("QUEUE IS EMPTY");
-        else
-        {
-            //remove event from queue
-            event[0] = event[heapSize - 1];
-            heapSize--;
-            if (heapSize > 0)
-                percolateDown(0);
-        }
-    }
-    // create event to insert in queue
-    void addEvent(Event action)
-    {
-        if (isFull())
-        {
-            int oldSize = arraySize;
-            doubleArray(arraySize);
-            event[oldSize + 1] = action;
-            heapSize++;
-        }
-        else
-        {
-            cout << "hi" << endl;
-            heapSize++;
-            cout << heapSize << ", " << arraySize << endl;
-            event[heapSize - 1] = action;
-            cout << "bye" << endl;
-            percolateUp(heapSize - 1);
         }
     }
     
@@ -201,11 +194,36 @@ public:
         Event *newArray = new Event[size*2];
         for(int i = 0; i < size; i++)
         {
-            newArray[i] = event[i];
+            newArray[i] = queue[i];
         }
         arraySize = size * 2;
-        delete [] event;
-        event = newArray;
+        delete [] queue;
+        queue = newArray;
+    }
+    
+    bool operator > (const Event &e) const
+    {
+        return this->time > e.time;
+    }
+    
+    bool operator < (const Event &e) const
+    {
+        return this->time < e.time;
+    }
+    
+    bool operator >= (const Event &e) const
+    {
+        return this->time >= e.time;
+    }
+    
+    bool operator <= (const Event &e) const
+    {
+        return this->time <= e.time;
+    }
+    
+    bool operator == (const Event &e) const
+    {
+        return this->time == e.time;
     }
 };
 

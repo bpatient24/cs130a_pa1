@@ -20,7 +20,7 @@ public:
     void scheduleAttack(class EventQueue x, unsigned long long int time, int source, int target);
     int successRate;
     bool succesfulAttack();
-//private:
+private:
 };
 
 #endif /* attacker_hpp */

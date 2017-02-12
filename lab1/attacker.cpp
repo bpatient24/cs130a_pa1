@@ -6,10 +6,11 @@
 //  Copyright © 2017 Ben Patient. All rights reserved.
 //
 
-#include "eventQueue.h"
 #include "attacker.hpp"
+#include <string>
 #include <stdlib.h>
 #include <iostream>
+#include "eventQueue.h"
 
 Attacker::Attacker()
 {
@@ -25,7 +26,7 @@ bool Attacker::succesfulAttack()
     return (rand() % 100 + 1) >= (100 - successRate);
 }
 
-void Attacker::scheduleAttack(class EventQueue x, unsigned long long int time, int source, int target) // generates event to notify sysAdmin
+void Attacker::scheduleAttack(class PriorityQueue x, unsigned long long int time, int source, int target) // generates event to notify sysAdmin
 {                                                                                  // source == -1 for attacker
     //add attack to event queue
     if(succesfulAttack())

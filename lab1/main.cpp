@@ -29,12 +29,18 @@ int simulateAttack(int numComputers, int attackPercent, int detectPercent)
     IDS ids = IDS(detectPercent);
     Attacker attacker = Attacker(attackPercent);
     EventQueue *priorityQueue = new EventQueue();
+    Event fix;
+    fix = Event(true, 5000, -2, 5);
+    priorityQueue->addEvent(fix);
+    cout << "FIX TIME IS: " << fix.time << endl;
+    cout << "TIME IS: " << priorityQueue[0].time << endl;
+    /*
     while(!exit)
     {
         //do stuff
         if(globaltime % 1000 == 0 && globaltime % 10000 !=0)
         {
-            cout << "Reached Case 1" << endl;
+            //cout << "Reached Case 1" << endl;
             //do stuff every second
             int attackerTarget = rand() % networkUnderAttack.networkSize + 1;
             attacker.scheduleAttack(*priorityQueue, globaltime + 100, -1, attackerTarget);// attackers attack
@@ -42,6 +48,7 @@ int simulateAttack(int numComputers, int attackPercent, int detectPercent)
             {
                 if(networkUnderAttack.network[i].compromised == true)
                 {
+                    cout << "HELLO" << endl;
                     networkUnderAttack.generateTarget(networkUnderAttack.network[i]);
                     attacker.scheduleAttack (*priorityQueue, globaltime + 100, i, networkUnderAttack.network[i].target);
                 }
@@ -50,13 +57,14 @@ int simulateAttack(int numComputers, int attackPercent, int detectPercent)
         }
         else if(globaltime % 1000 == 100)
         {
-            cout << "Reached Case 2" << endl;
+            cout << "Reached Case 2 at time " << globaltime << "TIMESTAMP: "  << priorityQueue[0].time << endl;
             // do stuff with latencies
             while(priorityQueue[0].time == globaltime)
             {
                 if(priorityQueue[0].isFix)
                 {
                     //dipatch fix event
+                    cout << "TRIED TO DISPATCH FIX" << endl;
                     sysadmin.fix(networkUnderAttack, priorityQueue[0].target);
                     fixMessage(priorityQueue[0].time, priorityQueue[0].target);
                     priorityQueue->removeMin();
@@ -64,6 +72,7 @@ int simulateAttack(int numComputers, int attackPercent, int detectPercent)
                 else
                 {
                     // dispatch attack event
+                    cout << "TRIED TO DISPATCH ATTACK" << endl;
                     attacker.attack(networkUnderAttack, priorityQueue[0].source, priorityQueue[0].target);
                     attackMessage(priorityQueue[0].time, priorityQueue[0].source, priorityQueue[0].target);
                     ids.notify(networkUnderAttack, sysadmin, priorityQueue[0].source, priorityQueue[0].target);
@@ -73,7 +82,7 @@ int simulateAttack(int numComputers, int attackPercent, int detectPercent)
         }
         else if(globaltime % 10000 == 0)
         {
-            
+            cout << "Reached Case 3" << endl;
             //schedule fixes
             for(int i = 0; i < networkUnderAttack.networkSize; i++)
             {
@@ -84,11 +93,11 @@ int simulateAttack(int numComputers, int attackPercent, int detectPercent)
                 }
                 //networkUnderAttack.generateTarget(networkUnderAttack.network[sysadmin.infectedComputers.at(i)]);
             }
-            /*if((sysadmin.infectedComputers.empty()))
+            /if((sysadmin.infectedComputers.empty()))
             {
                 cout << sysadmin.infectedComputers.at(0) << endl;
                 sysadmin.scheduleFix(*priorityQueue, globaltime + 100, sysadmin.infectedComputers.at(0));
-            }*/
+            } /
         }
         
         exit = (networkUnderAttack.compromised() == true) && (globaltime < maxTime) && ((firstLoop) || !(networkUnderAttack.percentCompromised == 0));
@@ -110,8 +119,8 @@ int simulateAttack(int numComputers, int attackPercent, int detectPercent)
         }
         //cout << globaltime << endl;
         globaltime += 100;
-    }
-    return exitCode;
+    }*/
+    return -1; //return exitCode;
 }
 
 int main(int argc, const char * argv[]) {
