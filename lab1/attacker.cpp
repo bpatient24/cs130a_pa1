@@ -7,10 +7,10 @@
 //
 
 #include "attacker.hpp"
+#include "network.hpp"
 #include <string>
 #include <stdlib.h>
 #include <iostream>
-#include "eventQueue.h"
 
 Attacker::Attacker()
 {
@@ -26,7 +26,7 @@ bool Attacker::succesfulAttack()
     return (rand() % 100 + 1) >= (100 - successRate);
 }
 
-void Attacker::scheduleAttack(class PriorityQueue x, unsigned long long int time, int source, int target) // generates event to notify sysAdmin
+void Attacker::scheduleAttack(EventQueue <Event> x, unsigned long long int time, int source, int target) // generates event to notify sysAdmin
 {                                                                                  // source == -1 for attacker
     //add attack to event queue
     if(succesfulAttack())
@@ -46,7 +46,7 @@ void Attacker::scheduleAttack(class PriorityQueue x, unsigned long long int time
     }
 }
 
-void Attacker::attack(class Network network, int source, int target)
+void Attacker::attack(Network network, int source, int target)
 {
     network.network[target].compromise();
 }

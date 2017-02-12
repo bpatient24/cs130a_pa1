@@ -28,13 +28,15 @@ int simulateAttack(int numComputers, int attackPercent, int detectPercent)
     SysAdmin sysadmin = SysAdmin();
     IDS ids = IDS(detectPercent);
     Attacker attacker = Attacker(attackPercent);
-    EventQueue *priorityQueue = new EventQueue();
+    EventQueue<Event> *priorityQueue = new EventQueue<Event>();
     Event fix;
     fix = Event(true, 5000, -2, 5);
     priorityQueue->addEvent(fix);
-    cout << "FIX TIME IS: " << fix.time << endl;
-    cout << "TIME IS: " << priorityQueue[0].time << endl;
-    /*
+    //cout << "FIX TIME IS: " << fix.time << endl;
+    Event nextEvent;
+    priorityQueue->deleteMin(nextEvent);
+    cout << "TIME IS: " << nextEvent.time << endl;
+
     while(!exit)
     {
         //do stuff
@@ -119,7 +121,7 @@ int simulateAttack(int numComputers, int attackPercent, int detectPercent)
         }
         //cout << globaltime << endl;
         globaltime += 100;
-    }*/
+    }
     return -1; //return exitCode;
 }
 

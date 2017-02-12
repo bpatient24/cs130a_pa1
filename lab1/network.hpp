@@ -11,8 +11,28 @@
 
 #include <stdio.h>
 #include <vector>
+#include "event.h"
+#include "eventQueue.h"
 
 using namespace std;
+
+//SYSADMIN DECLARATIONS *************************************************************************************
+class SysAdmin
+{
+    //friend class IDS;
+    //friend class Network;
+public:
+    SysAdmin();
+    void fix(class Network network, int target);
+    void processNotify(Network network, int attacker, int victim);//process the notify event
+    //vector<int> infectedComputers;
+    void percentInfected(Network net);
+    void scheduleFix(EventQueue<Event> *z, long time, int target);  //Schedule a computer to be fixed. It can be compromised again.
+    //void addInfected(int networkIndex);
+    //void removeInfected(int networkIndex);
+    //private:
+    
+};
 
 //COMPUTER DECLARATIONS *************************************************************************************
 class Computer
@@ -31,39 +51,21 @@ public:
 
 };
 
-//SYSADMIN DECLARATIONS *************************************************************************************
-class SysAdmin
-{
-    //friend class IDS;
-    //friend class Network;
-public:
-    SysAdmin();
-    void fix(class Network network, int target);
-    void processNotify(class Network network, int attacker, int victim);//process the notify event
-    //vector<int> infectedComputers;
-    void percentInfected(Network net);
-    void scheduleFix(class EventQueue x,unsigned long long int time, int target);  //Schedule a computer to be fixed. It can be compromised again.
-    //void addInfected(int networkIndex);
-    //void removeInfected(int networkIndex);
-//private:
-
-};
-
 //IDS DECLARATIONS *************************************************************************************/
 class IDS //: public SysAdmin
 {
 public:
     IDS();
     IDS(int rate);
-    void notify(class Network myNetwork, class SysAdmin sys, int attacker, int victim); // generates event to notify sysAdmin
+    void notify(Network myNetwork,SysAdmin sys, int attacker, int victim); // generates event to notify sysAdmin
     int detectRate;
-    bool detectedAttack(class Network myNetwork);
+    bool detectedAttack();
 //private:
 };
 
 
 //NETWORK DECLARATIONS *************************************************************************************
-class Network: public Computer, public IDS
+class Network
 {
     //friend class Computer;
     //friend class SysAdmin;

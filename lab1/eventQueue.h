@@ -13,41 +13,10 @@
 #include <stdlib.h>
 #include <iostream>
 #include <utility>
-#include "network.hpp"
+//#include "network.hpp"
+#include "event.h"
 
 using namespace std;
-
-class Event
-{
-    //friend class EventQueue;
-public:
-    
-    unsigned long long int time;
-    int target;
-    bool isFix; //fix or attack
-    int source; // -1 = attacker ; -2  = sysadmin
-    //int eventIndex;
-    //default constructor
-    Event()
-    {
-        //Event(true, 1, -3, -3);
-        isFix = NULL;
-        time = NULL;
-        source = NULL;
-        target = NULL;
-        //eventIndex = NULL;
-    }
-    // constructor
-    Event(bool fix, unsigned long long int timeForEvent, int eventSource, int targetForEvent)
-    {
-        isFix = fix;
-        time = timeForEvent;
-        source = eventSource;
-        target = targetForEvent;
-    }
-    
-    //private:
-};
 
 template <typename Event>
 class EventQueue
@@ -55,8 +24,7 @@ class EventQueue
 public:
     int heapSize;
     int arraySize;
-    Event *queue = new Event[100];
-    
+    Event *queue;
     
     //constructor
     EventQueue()
@@ -77,24 +45,28 @@ public:
     // create event to insert in queue
     void addEvent(const Event &e)
     {
-        if(heapSize == arraySize -1)
+        if(isFull())
         {
-            doubleArray(arraySize);
+            //GROW ARRAY
+            Event *newArray = new Event[heapSize*2];
+            for(int i = 0; i < heapSize; i++)
+            {
+                newArray[i] = queue[i];
+            }
+            arraySize = heapSize * 2;
+            delete [] queue;
+            queue = newArray;
         }
         
-        
-        int oldSize = ++arraySize;
+        int hole = ++heapSize;
         Event copy = e;
-        
-        //queue[oldSize] = copy;
        // percolateUp(oldSize);
-        
         queue[0] = move(copy);
-        for( ; copy < queue[oldSize/2]; oldSize /= 2)
+        for( ; copy < queue[hole/2]; hole /= 2)
         {
-            queue[oldSize] = move(queue[oldSize/2]);
+            queue[hole] = move(queue[hole/2]);
         }
-        queue[oldSize] = move(queue[0]);
+        queue[hole] = move(queue[0]);
     }
     
     bool isEmpty()
@@ -104,7 +76,7 @@ public:
     
     bool isFull()
     {
-        return (heapSize == arraySize);
+        return (heapSize == arraySize - 1);
     }
     
     void deleteMin(Event &nextEvent)
@@ -115,27 +87,59 @@ public:
         }
         
         nextEvent = move(queue[1]);
-        queue[1] = move (queue[arraySize--]);
+        queue[1] = move (queue[heapSize--]);
         percolateDown(1);
     }
     
     int getLeftChildIndex(int nodeIndex)
     {
-        return 2 * nodeIndex + 1;
+        return 2 * nodeIndex;
     }
     
     int getRightChildIndex(int nodeIndex)
     {
-        return 2 * nodeIndex + 2;
+        return 2 * nodeIndex + 1;
     }
     
     int getParentIndex(int nodeIndex)
     {
-        return (nodeIndex - 1) / 2;
+        return nodeIndex / 2;
     }
     
+    void percolateDown(int hole)
+    {
+        int child;
+        Event temp = move(queue[hole]);
+        for( ; hole*2 <= heapSize; hole = child)
+        {
+            child = hole*2;
+            if (child != heapSize && queue[child + 1] < queue[child])
+            {
+                child++;
+            }
+            if (queue[child] < temp)
+            {
+                queue[hole] = move(queue[child]);
+            }
+            else break;
+        }
+        queue[hole] = move(temp);
+    }
+    
+    void percolateUp(int index)
+    {
+        Event copy = move(queue[index]);
+        queue[0] = move(copy);
+        for( ; copy < queue[index/2]; index /= 2)
+        {
+            queue[index] = move(queue[index/2]);
+        }
+        queue[index] = move(queue[0]);
+    }
+    
+    
     //move up in the heap until sorted
-    void percolateUp(int nodeIndex)
+    /*void percolateUp(int nodeIndex)
     {
         //cout << "TEST" << endl;
         int parentIndex;
@@ -186,45 +190,19 @@ public:
             queue[nodeIndex] = temp;
             percolateDown(minIndex);
         }
-    }
+    }*/
     
-    void doubleArray(int size)
+    //void doubleArray(int size)
+    
+    
+    /*Event &operator[] (int i)
     {
-        //GROW ARRAY
-        Event *newArray = new Event[size*2];
-        for(int i = 0; i < size; i++)
+        if(i > arraySize)
         {
-            newArray[i] = queue[i];
+            cout << "OUT OF BOUNDS" << endl;
         }
-        arraySize = size * 2;
-        delete [] queue;
-        queue = newArray;
-    }
-    
-    bool operator > (const Event &e) const
-    {
-        return this->time > e.time;
-    }
-    
-    bool operator < (const Event &e) const
-    {
-        return this->time < e.time;
-    }
-    
-    bool operator >= (const Event &e) const
-    {
-        return this->time >= e.time;
-    }
-    
-    bool operator <= (const Event &e) const
-    {
-        return this->time <= e.time;
-    }
-    
-    bool operator == (const Event &e) const
-    {
-        return this->time == e.time;
-    }
+        return queue[i];
+    }*/
 };
 
 #endif /* eventQueue_h */

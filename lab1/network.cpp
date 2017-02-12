@@ -9,7 +9,7 @@
 #include "network.hpp"
 #include <stdlib.h>
 #include <iostream>
-#include "eventQueue.h"
+//#include "eventQueue.h"
 
 //COMPUTER DECLARATIONS *************************************************************************************
 // computer default constructor
@@ -53,11 +53,11 @@ void SysAdmin::fix(class Network network, int fixTarget)
     //removeInfected(fixTarget);
 }
 
-void SysAdmin::scheduleFix(class EventQueue x, unsigned long long int time, int target)
+void SysAdmin::scheduleFix(EventQueue <Event> *x, long time, int target)
 {
     Event fix;
     fix = Event(true, time, -2, target);
-    x.addEvent(fix);
+    x->addEvent(fix);
 }
 
 void SysAdmin::processNotify(Network network, int attacker, int victim)
@@ -102,16 +102,16 @@ IDS::IDS(int rate)
     cout << "IDS Initialized" << endl;
 };
 
-bool IDS::detectedAttack(Network network)
+bool IDS::detectedAttack()
 {
-    return (rand() % 100 + 1) >= (100 - network.detectRate);
+    return (rand() % 100 + 1) >= (100 - detectRate);
 }
 
 void IDS::notify(Network network, SysAdmin sys, int attacker, int victim)
 {
     if(attacker == -1)
     {
-        if(detectedAttack(network))
+        if(detectedAttack())
         {
             sys.processNotify(network, attacker, victim);
         }
@@ -120,7 +120,7 @@ void IDS::notify(Network network, SysAdmin sys, int attacker, int victim)
     {
         if(!((network.dividerIndex > attacker && network.dividerIndex > victim) || (network.dividerIndex < attacker && network.dividerIndex < victim))) // check to see if they crossed domains
         {
-            if(detectedAttack(network))
+            if(detectedAttack())
             {
                 sys.processNotify(network, attacker, victim);
             }
