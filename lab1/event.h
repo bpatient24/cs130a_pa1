@@ -21,10 +21,10 @@ public:
     Event()
     {
         //Event(true, 1, -3, -3);
-        isFix = NULL;
-        time = NULL;
-        source = NULL;
-        target = NULL;
+        isFix = false;
+        time = -1;
+        source = -1;
+        target = -1;
         //eventIndex = NULL;
     }
     // constructor

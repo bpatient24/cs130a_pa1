@@ -12,13 +12,14 @@
 #include <stdio.h>
 #include "eventQueue.h"
 #include "event.h"
+#include "network.hpp"
 
 class Attacker
 {
 public:
     Attacker();
     Attacker(int rate);
-    void attack(class Network network, int source, int target); // generates event to notify sysAdmin
+    void attack(Network network, int source, int target); // generates event to notify sysAdmin
     void scheduleAttack(EventQueue <Event> x, unsigned long long int time, int source, int target);
     int successRate;
     bool succesfulAttack();

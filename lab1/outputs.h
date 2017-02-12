@@ -12,33 +12,34 @@
 #include <string>
 #include <iostream>
 
+
 void attackMessage(unsigned long long int time, int attacker, int victim)
 {
     if(attacker == - 1)
     {
-        cout << "ATTACK(" << time << ",Attacker," << victim << ")" << endl;
+        std::cout << "ATTACK(" << time << ",Attacker," << victim << ")" << std::endl;
 
     }
     else
     {
-        cout << "ATTACK(" << time << "," << attacker << "," << victim << ")" << endl;
+        std::cout << "ATTACK(" << time << "," << attacker << "," << victim << ")" << std::endl;
     }
 }
 
 void fixMessage(unsigned long long int time, int target)
 {
-        cout << "FIX(" << time << "," << target << ")" << endl;
+        std::cout << "FIX(" << time << "," << target << ")" << std::endl;
 }
 
 void notifyMessage(unsigned long long int time, int attacker, int victim)
 {
     if(attacker == - 1)
     {
-        cout << "NOTIFY(" << time << ",Attacker," << victim << ")" << endl;
+        std::cout << "NOTIFY(" << time << ",Attacker," << victim << ")" << std::endl;
     }
     else
     {
-        cout << "NOTIFY(" << time << "," << attacker << "," << victim << ")" << endl;
+        std::cout << "NOTIFY(" << time << "," << attacker << "," << victim << ")" << std::endl;
     }
 }
 
@@ -46,15 +47,15 @@ void endMessage(int code) // 1 = network wins; 2 = attacker wins; 3 = draw
 {
     if(code == 1)
     {
-        cout << "sysadmin won!" << endl;
+        std::cout << "sysadmin won!" << std::endl;
     }
     else if(code == 2)
     {
-        cout << "attacker won!" << endl;
+        std::cout << "attacker won!" << endl;
     }
     else
     {
-        cout << "DRAW - time ran out" << endl;
+        std::cout << "DRAW - time ran out" << endl;
     }
 }
 #endif /* outputs_h */

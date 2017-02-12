@@ -34,7 +34,7 @@ void Computer::compromise()  //sets compromised to true.
     compromised = true;
     
 }
-void Computer::fix()         //sets compromise to false.
+void Computer::fix()         //sets compromised to false.
 {
     compromised = false;
 };
@@ -42,8 +42,6 @@ void Computer::fix()         //sets compromise to false.
 //SYSADMIN DECLARATIONS *************************************************************************************
 SysAdmin::SysAdmin()
 {
-    //infectedComputers.push_back(1);
-    //infectedComputers.reserve(100);
     cout << "SysAdmin Initialized" << endl;
 }
 
@@ -51,7 +49,6 @@ void SysAdmin::fix(class Network network, int fixTarget)
 {
     //add fix event and remove from infected list
     network.fixComputer(fixTarget);
-    //removeInfected(fixTarget);
 }
 
 void SysAdmin::scheduleFix(EventQueue <Event> x, long time, int target)
@@ -66,30 +63,9 @@ void SysAdmin::processNotify(int time, int attacker, int victim)
     //add infected to vector
     if(attacker > -1) //attacker is not attacker agent
     {
-        //add attacker
-        //addInfected(attacker);
         notifyMessage(time, attacker, victim);
     }
-    //add victim
-    //addInfected(victim);
 }
-
-/*void SysAdmin::percentInfected(Network net)
-{
-    net.percentCompromised = (infectedComputers.size() / net.networkSize);
-}
-
-void SysAdmin::addInfected(int index)
-{
-    cout << "VECTOR" << infectedComputers.size() << endl;
-    //infectedComputers.get_allocator().allocate(2);
-    infectedComputers.push_back(index);
-}
-
-void SysAdmin::removeInfected(int index)
-{
-    infectedComputers.erase(remove(infectedComputers.begin(), infectedComputers.end(), index), infectedComputers.end());
-}*/
 
 //IDS DECLARATIONS *************************************************************************************
 //default constructor
@@ -134,16 +110,14 @@ void IDS::notify(Network network, int time, int attacker, int victim)
 //network defualt constructor
 Network::Network()
 {
-    Network(0);
+    network = new Computer[100];
     cout << "Network default constructor" << endl;
 }
 //network constructor
 Network::Network(int size)
 {
-    for(int i = 0; i < size; i++)
-    {
-        network.push_back(Computer(i));
-    }
+    network = new Computer[size];
+
     if(size % 2 == 1)
     {
         dividerIndex = size / 2 + 1;

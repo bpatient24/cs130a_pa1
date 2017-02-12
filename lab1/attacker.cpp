@@ -7,7 +7,7 @@
 //
 
 #include "attacker.hpp"
-#include "network.hpp"
+
 #include <string>
 #include <stdlib.h>
 #include <iostream>
